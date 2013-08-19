@@ -65,17 +65,23 @@
 	
 	// ----------------------------------------------------------------
 	// Add the custom MSTW icon to CPT pages
-	add_action( 'admin_head', 'mstw_cpt_icon' );
-
-	function mstw_cpt_icon( ) {
-    ?>
-    <style type="text/css" media="screen">
-		#icon-mstw-cs-main-menu.icon32.icon32-posts-coach, #icon-mstw-cs-main-menu.icon32.icon32-posts-staff_position {
-			background: url("http://shoalsummitsolutions.com/dev/wp-content/plugins/coaching-staffs/images/mstw-logo-32x32.png") no-repeat;
-		}
-    </style>
-    <?php
-}
+	
+	function mstw_cs_custom_css() {
+	echo '<style type="text/css">
+		   #icon-mstw-cs-main-menu.icon32 {background: url( ' . plugins_url( '/coaching-staffs/images/mstw-logo-32x32.png', 'coaching-staffs' ) . ') transparent no-repeat;}
+           #icon-coaching-staffs.icon32 {background: url( ' . plugins_url( '/coaching-staffs/images/mstw-logo-32x32.png', 'coaching-staffs' ) . ') transparent no-repeat;}
+		   #icon-edit.icon32-posts-staff_position {background: url( ' . plugins_url( '/coaching-staffs/images/mstw-logo-32x32.png', 'coaching-staffs' ) . ') transparent no-repeat;}' .
+         '</style>';
+	}
+	add_action('admin_head', 'mstw_cs_custom_css');
+	
+	/*
+	function mstw_cs_load_admin_style( ) {
+			wp_register_style( 'mstw_cs_admin_css', get_stylesheet_directory_uri( ) . '/css/mstw-cs-admin-styles.css' );
+			wp_enqueue_style( 'mstw_cs_admin_css' );
+	}
+	add_action( 'admin_enqueue_scripts', 'mstw_cs_load_admin_style' );
+	*/
 	
 	// ----------------------------------------------------------------
 	// Remove Quick Edit Menu	
@@ -426,7 +432,7 @@
 	function mstw_cs_settings_page( ) {
 		?>
 		<div class="wrap">
-			<?php screen_icon(); ?>
+			<?php screen_icon( 'coaching-staffs' ); ?>
 			<h2>Coaching Staffs Display Settings</h2>
 			<?php //settings_errors(); ?>
 			<form action="options.php" method="post">
