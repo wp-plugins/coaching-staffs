@@ -200,7 +200,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 					'name' 				   		   => __( 'Staffs', 'mstw-loc-domain' ),
 					'singular_name' 			   =>  __( 'Staff', 'mstw-loc-domain' ),
 					'search_items' 				   => __( 'Search Staffs', 'mstw-loc-domain' ),
-					'popular_items' 			   => __( 'Popular Staffs', 'mstw-loc-domain' ),
+					'popular_items' 			   => null, //__( 'Popular Staffs', 'mstw-loc-domain' ),
 					'all_items' 				   => __( 'All Staffs', 'mstw-loc-domain' ),
 					'parent_item' 				   => null,
 					'parent_item_colon' 		   => null,
