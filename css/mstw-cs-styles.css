@@ -21,6 +21,9 @@
  *  The are also rules for horizonal & vertical cell alignment.
  *
  ******************************************************************************/
+ #icon-mstw-cs-main-menu.icon32 {
+    background: transparent url( 'coaching-staffs/images/mstw-logo-32x32.png' ) no-repeat;
+}
  
 .mstw-cs-table {
     border-collapse: collapse!important;
