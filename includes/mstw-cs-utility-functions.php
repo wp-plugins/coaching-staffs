@@ -20,7 +20,8 @@
 				'table_photo_width'		=> 64,
 				'table_photo_height'	=> 64,
 				'profile_bio_heading_text' => 'Profile',
-				'profile_bio_border_width' => 2,		
+				'profile_bio_border_width' => 2,
+				'show_gallery_title' => 1, 
 				);
 				
 		return $defaults;

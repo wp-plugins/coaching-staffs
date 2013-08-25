@@ -19,7 +19,7 @@
 	get_header(); 
 	
 	// Get the settings from the admin page
-	//$options = get_option( 'mstw_cs_options' );
+	$options = get_option( 'mstw_cs_options' );
 	
 	//$sp_main_text_color = $options['sp_main_text_color'];
 	//$sp_main_bkgd_color = $options['sp_main_bkgd_color'];
@@ -49,7 +49,9 @@
 	<div id="content-coach-gallery" role="main" >
 
 	<header class="page-header page-header-<?php echo $staff_slug ?>">
-		<?php echo '<h1 class="staff-head-title staff-head-title-' . $staff_slug . '">' . $staff_name . '</h1>'; ?>
+		<?php if( $options['show_gallery_title'] == 1 ) {
+			echo '<h1 class="staff-head-title staff-head-title-' . $staff_slug . '">' . $staff_name . '</h1>'; 
+		} ?>
 	</header>
 
 	<?php /* Start the Loop */ 

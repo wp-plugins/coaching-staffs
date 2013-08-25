@@ -27,4 +27,8 @@ jQuery(document).ready(function($){
 	$('#profile_bio_text_color').wpColorPicker();
 	$('#profile_bio_border_color').wpColorPicker();
 	
+	$('#gallery_tile_border_color').wpColorPicker();
+	$('#gallery_title_color').wpColorPicker();
+	
+	
 });

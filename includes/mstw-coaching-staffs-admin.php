@@ -1,34 +1,40 @@
 <?php
 /*
  *	This is the admin portion of the MSTW Coaching Staffs Plugin
- *	It is loaded in mstw-team-rosters.php conditioned on is_admin() 
+ *	It is loaded in mstw-coaching-staffs.php conditioned on is_admin() 
  */
 
-/*  Copyright 2013  Mark O'Donnell  (email : mark@shoalsummitsolutions.com)
+/*-----------------------------------------------------------------------------------
+Copyright 2012-13  Mark O'Donnell  (email : mark@shoalsummitsolutions.com)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-/* ------------------------------------------------------------------------
+Code from the CSV Importer plugin was modified under that plugin's 
+GPLv2 (or later) license from Smackcoders. 
+
+Code from the File_CSV_DataSource class was re-used unchanged under
+that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel. 
+-----------------------------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------------------
  * CHANGE LOG:
  * 20130801-MAO: Started development of the initial version 0.1.
  *	
  * 
  *
  *  
- * ------------------------------------------------------------------------*/
+-----------------------------------------------------------------------------------*/
 
 // --------------------------------------------------------------------------------------
 // Set-up Action and Filter Hooks for the Settings on the admin side
@@ -65,6 +71,7 @@
 	
 	// ----------------------------------------------------------------
 	// Add the custom MSTW icon to CPT pages
+	add_action('admin_head', 'mstw_cs_custom_css');
 	
 	function mstw_cs_custom_css() {
 	echo '<style type="text/css">
@@ -73,16 +80,7 @@
 		   #icon-edit.icon32-posts-staff_position {background: url( ' . plugins_url( '/coaching-staffs/images/mstw-logo-32x32.png', 'coaching-staffs' ) . ') transparent no-repeat;}' .
          '</style>';
 	}
-	add_action('admin_head', 'mstw_cs_custom_css');
-	
-	/*
-	function mstw_cs_load_admin_style( ) {
-			wp_register_style( 'mstw_cs_admin_css', get_stylesheet_directory_uri( ) . '/css/mstw-cs-admin-styles.css' );
-			wp_enqueue_style( 'mstw_cs_admin_css' );
-	}
-	add_action( 'admin_enqueue_scripts', 'mstw_cs_load_admin_style' );
-	*/
-	
+
 	// ----------------------------------------------------------------
 	// Remove Quick Edit Menu	
 	add_filter( 'post_row_actions', 'mstw_cs_remove_quick_edit', 10, 2 );
@@ -96,8 +94,13 @@
 
 	// ----------------------------------------------------------------
 	// Remove the Bulk Actions pull-downs
-	add_filter( 'bulk_actions-' . 'edit-coach', '__return_empty_array' );
-	add_filter( 'bulk_actions-' . 'edit-staff_position', '__return_empty_array' );	
+	add_filter( 'bulk_actions-edit-coach', 'mstw_cs_bulk_actions' );
+	add_filter( 'bulk_actions-edit-staff_position', 'mstw_cs_bulk_actions' );
+
+	function mstw_cs_bulk_actions( $actions ){
+        unset( $actions['edit'] );
+        return $actions;
+    }	
 		
 	// ----------------------------------------------------------------
 	// Add a filter the All Staff Positions screen based on the Staffs Taxonomy
@@ -107,12 +110,16 @@
 	
 	function mstw_cs_restrict_manage_posts( ) {
 		global $typenow;
+		//$args=array( 'public' => true, '_builtin' => false ); 
+		//$post_types = get_post_types($args);
+		//if ( in_array($typenow, $post_types) ) {
 		if ( $typenow == 'staff_position' ) {
-			$args = array( 'public' => true, '_builtin' => false ); 
-			$post_types = get_post_types( $args );
-			if ( in_array( $typenow, $post_types ) ) {
+			//$args = array( 'public' => true, '_builtin' => false ); 
+			//$post_types = get_post_types( $args );
+			//if ( in_array( $typenow, $post_types ) ) {
 			$filters = get_object_taxonomies( $typenow );
-				foreach ( $filters as $tax_slug ) {
+			$tax_slug = $filters[0];
+				//foreach ( $filters as $tax_slug ) {
 					$tax_obj = get_taxonomy( $tax_slug );
 					wp_dropdown_categories(array(
 						'show_option_all' => __( 'Show All '.$tax_obj->label, 'mstw-loc-domain' ),
@@ -124,17 +131,18 @@
 						'show_count' => true,
 						'hide_empty' => true
 					));
-				}
-			}
+				//}
+			//}
 		}
 	}
 	
 	function mstw_cs_convert_restrict( $query ) {
 		global $pagenow;
 		global $typenow;
-		if ( $typenow == 'staff_position' ) {
+		//if ( $typenow == 'staff_position' ) {
 			if ( $pagenow=='edit.php' ) {
 				$filters = get_object_taxonomies( $typenow );
+				//$tax_slug = $filters[0];
 				foreach ( $filters as $tax_slug ) {
 					$var = &$query->query_vars[$tax_slug];
 					if ( isset($var) ) {
@@ -143,13 +151,12 @@
 					}
 				}
 			}
-			return $query;
-		}
+		//}
+		return $query;
 	}
-	
-	
+
 	// ----------------------------------------------------------------
-	// Create the meta box for the Team Roster custom post type
+	// Create the meta box for the Coaching Staff custom post type
 	add_action( 'add_meta_boxes', 'mstw_cs_add_meta_boxes' );
 
 	function mstw_cs_add_meta_boxes () {	
@@ -256,8 +263,8 @@
 	}
 
 
-// ----------------------------------------------------------------------
-// Save the Custom Post Type Meta Data
+	// ----------------------------------------------------------------------
+	// Save the Custom Post Type Meta Data
 	add_action( 'save_post', 'mstw_cs_save_meta_data' );
 
 	function mstw_cs_save_meta_data( $post_id ) {
@@ -291,7 +298,7 @@
 	function mstw_cs_edit_coach_columns( $columns ) {
 
 		$columns = array(
-			//'cb' 			=> '<input type="checkbox" />',
+			'cb' 			=> '<input type="checkbox" />',
 			'title' 		=> __( 'Name', 'mstw-loc-domain' ),
 			'photo' 		=> __( 'Photo', 'mstw-loc-domain' ),
 			'alma_mater' 	=> __( 'Alma Mater', 'mstw-loc-domain' ),
@@ -310,17 +317,6 @@
 		global $post;
 
 		switch( $column ) {
-			//case 'team' :
-			//	$taxonomy = 'teams';
-				
-			//	$teams = get_the_terms( $post_id, $taxonomy );
-			//	if ( is_array( $teams) ) {
-			//		foreach( $teams as $key => $team ) {
-			//			$teams[$key] =  $team->name;
-			//		}
-			//			echo implode( ' | ', $teams );
-			//	}
-			//	break;
 			case 'photo':
 				if ( has_post_thumbnail( $post->ID ) ) {
 					echo get_the_post_thumbnail( $post->ID, array(64, 64) ); 
@@ -353,7 +349,7 @@
 	function mstw_cs_edit_staff_columns( $columns ) {
 
 		$columns = array(
-			//'cb' 			=> '<input type="checkbox" />',
+			'cb' 			=> '<input type="checkbox" />',
 			'title' 		=> __( 'Position', 'mstw-loc-domain' ),
 			'staff' 		=> __( 'Staff', 'mstw-loc-domain' ),
 			//'alma_mater' 	=> __( 'Alma Mater', 'mstw-loc-domain' ),
@@ -363,7 +359,7 @@
 		return $columns;
 	}
 	
-// ----------------------------------------------------------------
+	// ----------------------------------------------------------------
 	// Display the Staff Positions 'view all' columns
 	add_action( 'manage_staff_position_posts_custom_column', 'mstw_cs_manage_staff_columns', 10, 2 );
 
@@ -476,6 +472,8 @@
 		mstw_cs_gallery_setup( );
 	}
 
+	// --------------------------------------------------------------------------------------
+	// Staff table settings	
 	function mstw_cs_table_settings_setup( ) {
 		$display_page = 'mstw-cs-display-settings'; 	//menu page slug on which to display
 		$page_section = 'mstw_cs_table_settings'; 	//page section slug on which to display
@@ -484,7 +482,7 @@
 		
 		add_settings_section(
 			$page_section,  	//id attribute of tags
-			__( 'Roster Table/[shortcode] Settings', 'mstw-loc-domain' ),	//title of the section
+			__( 'Staff Table/[shortcode] Settings', 'mstw-loc-domain' ),	//title of the section
 			'mstw_cs_table_settings_text',	//callback to fill section with desired output - should echo
 			$display_page 	//page slug on which to display
 		);
@@ -498,14 +496,14 @@
 						
 		add_settings_field(
 			'show_title',
-			__( 'Show Roster Table Titles:', 'mstw-loc-domain' ),
+			__( 'Show Staff Table Titles:', 'mstw-loc-domain' ),
 			'mstw_utl_show_hide_ctrl',     	//Callback to display field
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
 			$args							//Callback arguments
 			);
 			
-		// Roster Table[shortcode] Title Color
+		// Staff Table[shortcode] Title Color
 		$args = array( 	'id' => 'table_title_color',
 						'name' => 'mstw_cs_options[table_title_color]',
 						'value' => $options['table_title_color'],
@@ -634,7 +632,7 @@
 			$args
 		);
 		
-		// Roster Table[shortcode] Even Row Text Color
+		// Staff Table[shortcode] Even Row Text Color
 		$args = array( 	'id' => 'table_even_text_color',
 						'name' => 'mstw_cs_options[table_even_text_color]',
 						'value' => $options['table_even_text_color'],
@@ -650,7 +648,7 @@
 			$args
 		);	
 		
-		// Roster Table[shortcode] Even Row Background Color
+		// Staff Table[shortcode] Even Row Background Color
 		$args = array( 	'id' => 'table_even_bkgd_color',
 						'name' => 'mstw_cs_options[table_even_bkgd_color]',
 						'value' => $options['table_even_bkgd_color'],
@@ -666,7 +664,7 @@
 			$args
 		);
 		
-		// Roster Table[shortcode] Even Row Link Color
+		// Staff Table[shortcode] Even Row Link Color
 		$args = array( 	'id' => 'table_even_link_color',
 						'name' => 'mstw_cs_options[table_even_link_color]',
 						'value' => $options['table_even_link_color'],
@@ -682,7 +680,7 @@
 			$args
 		);
 
-// Roster Table[shortcode] Odd Row Text Color
+	// Staff Table[shortcode] Odd Row Text Color
 		$args = array( 	'id' => 'table_odd_text_color',
 						'name' => 'mstw_cs_options[table_odd_text_color]',
 						'value' => $options['table_odd_text_color'],
@@ -698,7 +696,7 @@
 			$args
 		);	
 		
-		// Roster Table[shortcode] Odd Row Background Color
+		// Staff Table[shortcode] Odd Row Background Color
 		$args = array( 	'id' => 'table_odd_bkgd_color',
 						'name' => 'mstw_cs_options[table_odd_bkgd_color]',
 						'value' => $options['table_odd_bkgd_color'],
@@ -714,7 +712,7 @@
 			$args
 		);	
 
-		// Roster Table[shortcode] Odd Row Link Color
+		// Staff Table[shortcode] Odd Row Link Color
 		$args = array( 	'id' => 'table_odd_link_color',
 						'name' => 'mstw_cs_options[table_odd_link_color]',
 						'value' => $options['table_odd_link_color'],
@@ -732,6 +730,8 @@
 		
 	}
 	
+	// --------------------------------------------------------------------------------------
+	// Single coach profile settings
 	function mstw_cs_profile_setup( ) {
 		$options = get_option( 'mstw_cs_options' );
 		
@@ -777,6 +777,7 @@
 			$args
 		);
 		
+		// Profile Header Text Color
 		$args = array( 	'id' => 'profile_header_text_color',
 						'name' => 'mstw_cs_options[profile_header_text_color]',
 						'value' => $options['profile_header_text_color'],
@@ -905,122 +906,245 @@
 		);	
 	}
 	
+	// --------------------------------------------------------------------------------------
+	// Coaches Gallery settings	
 	function mstw_cs_gallery_setup( ) {
 		$options = get_option( 'mstw_cs_options' );
 		
 		$display_page = 'mstw-cs-display-settings'; 	//menu page slug on which to display
 		$page_section = 'mstw_cs_gallery_settings'; 	//page section slug on which to display
-		
+			
 		add_settings_section(
 			$page_section,  	//id attribute of tags
 			__( 'Coaches Gallery Settings', 'mstw-loc-domain' ),	//title of the section
 			'mstw_cs_gallery_settings_text',	//callback to fill section with desired output - should echo
 			$display_page 	//page slug on which to display
+		);
+		
+		// Show/Hide Gallery Title
+		$args = array(	'id' => 'show_gallery_title',
+						'name' => 'mstw_cs_options[show_gallery_title]',
+						'value' => $options['show_gallery_title'],
+						'label' => __( 'Will hide the gallery title if you want to use the page title or another element. (Default: show).', 'mstw-loc-domain')
+						);
+						
+		add_settings_field(
+			'show_gallery_title',
+			__( "Show Gallery Title:", 'mstw-loc-domain' ),
+			'mstw_utl_show_hide_ctrl',		//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+		
+		// Gallery Title Color
+		$args = array( 	'id' => 'gallery_title_color',
+						'name' => 'mstw_cs_options[gallery_title_color]',
+						'value' => $options['gallery_title_color'],
+						'label' => ''
+					 );
+					 
+		add_settings_field(
+			'gallery_title_color',
+			__( 'Gallery Title Color:', 'mstw-loc-domain' ),
+			'mstw_utl_color_ctrl',
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args
 		);	
+		
+		//Tile Corner Style
+		$args = array(	'id' => 'gallery_tile_radius',
+						'name' => 'mstw_cs_options[gallery_tile_radius]',
+						'value'	=> $options['gallery_tile_radius'],
+						'label' => __( 'Default is rounded.', 'mstw-loc-domain' ),
+						'options' => array( __( 'Rounded', 'mstw-loc-doman' ) => 15,
+											__( 'Square', 'mstw-loc-doman' ) => 0,
+											),
+						);
+						
+		add_settings_field(
+			'gallery_tile_radius',
+			__( 'Gallery Tile Corner Style:', 'mstw-loc-domain' ),
+			'mstw_utl_select_option_ctrl',
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args
+		);
+
+		// Coaches' Gallery Photo Width
+		$args = array( 	'id' => 'gallery_photo_width',
+						'name'	=> 'mstw_cs_options[gallery_photo_width]',
+						'value'	=> $options['gallery_photo_width'],
+						'label'	=> __( 'Set width in pixels for gallery photos, if shown. (Default: 150px)', 'mstw-loc-domain' )
+						);
+						
+		add_settings_field(
+			'gallery_photo_width',
+			__( 'Gallery Photo Width:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args
+		);
+		
+		// Coaches' Gallery Photo Height
+		$args = array( 	'id' => 'gallery_photo_height',
+						'name'	=> 'mstw_cs_options[gallery_photo_height]',
+						'value'	=> $options['gallery_photo_height'],
+						'label'	=> __( 'Set height in pixels for gallery photos, if shown. (Default: 150px)', 'mstw-loc-domain' )
+						);
+						
+		add_settings_field(
+			'gallery_photo_height',
+			__( 'Gallery Photo Height:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args
+		);
+		
+		// Gallery Tile Border Color
+		$args = array( 	'id' => 'gallery_tile_border_color',
+						'name' => 'mstw_cs_options[gallery_tile_border_color]',
+						'value' => $options['gallery_tile_border_color'],
+						'label' => ''
+					 );
+					 
+		add_settings_field(
+			'gallery_tile_border_color',
+			__( 'Gallery Tile Border Color:',  'mstw-loc-domain' ),
+			'mstw_utl_color_ctrl',
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args
+		);
+		
+		// Gallery Tile Border width
+		$args = array( 	'id' => 'gallery_tile_border_width',
+						'name' => 'mstw_cs_options[gallery_tile_border_width]',
+						'value' => $options['gallery_tile_border_width'],
+						'label' => __( 'in pixels (Default: 2px)', 'mstw-loc-domain' ),
+					 );
+					 
+		add_settings_field(
+			'gallery_tile_border_width',
+			__( 'Gallery Tile Border Width:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args
+		);		
 	}
 
-function mstw_cs_gallery_settings_text( ) {
-	echo '<p>' . __( 'Enter the default settings for Coaches Gallery pages.', 'mstw-loc-domain' ) .  '</p>';
-}
+	function mstw_cs_gallery_settings_text( ) {
+		echo '<p>' . __( 'Enter the default settings for Coaches Gallery pages.', 'mstw-loc-domain' ) .  '</p>';	
+	}
 
-function mstw_cs_profile_settings_text( ) {
-	echo '<p>' . __( 'Enter the default settings for Single Coach Profile pages.', 'mstw-loc-domain' ) .  '</p>';
-}
+	function mstw_cs_profile_settings_text( ) {
+		echo '<p>' . __( 'Enter the default settings for Single Coach Profile pages.', 'mstw-loc-domain' ) .  '</p>';
+	}
 
-function mstw_cs_table_settings_text( ) {
-	echo '<p>' . __( 'Enter the default settings for Staff Table/[shortcode]. These can be overridden by [shortcode] arguments.', 'mstw-loc-domain' ) .  '</p>';
-}
- 
-function mstw_cs_validate_settings( $input ) {
-	// Create our array for storing the validated options
-	$output = array();
-	// Pull the previous (good) options
-	$options = get_option( 'mstw_tr_options' );
-	
-	if ( array_key_exists( 'reset', $input ) ) {
-		if ( $input['reset'] ) {
-				$output = mstw_cs_get_defaults( );
-				return $output;
+	function mstw_cs_table_settings_text( ) {
+		echo '<p>' . __( 'Enter the default settings for Staff Table/[shortcode]. These can be overridden by [shortcode] arguments.', 'mstw-loc-domain' ) .  '</p>';
+	}
+	 
+	function mstw_cs_validate_settings( $input ) {
+		// Create our array for storing the validated options
+		$output = array();
+		// Pull the previous (good) options
+		$options = get_option( 'mstw_tr_options' );
+		
+		if ( array_key_exists( 'reset', $input ) ) {
+			if ( $input['reset'] ) {
+					$output = mstw_cs_get_defaults( );
+					return $output;
+			}
 		}
+		
+		// Loop through each of the incoming options
+		foreach( $input as $key => $value ) {
+			// Check to see if the current option has a value. If so, process it.
+			if( isset( $input[$key] ) ) {
+				switch ( $key ) {
+					// add the hex colors
+					case 'table_header_bkgd_color':
+					case 'table_header_text_color':
+					case 'table_border_color':
+					case 'table_title_color':
+					case 'table_even_text_color':
+					case 'table_even_bkgd_color':
+					case 'table_even_link_color':
+					case 'table_odd_text_color':
+					case 'table_odd_bkgd_color':
+					case 'table_odd_link_color':
+					case 'profile_header_bkgd_color':
+					case 'profile_header_text_color':
+					case 'profile_header_name_color':
+					case 'profile_header_position_color':
+					case 'profile_bio_heading_color':
+					case 'profile_bio_text_color':
+					case 'profile_bio_bkgd_color':
+					case 'profile_bio_border_color':
+					case 'gallery_tile_border_color':
+					case 'gallery_title_color':
+						// validate the color for proper hex format
+						$sanitized_color = mstw_utl_sanitize_hex_color( $input[$key] );
+						
+						// decide what to do - save new setting 
+						// or display error & revert to last setting
+						if ( isset( $sanitized_color ) ) {
+							// blank input is valid
+							$output[$key] = $sanitized_color;
+						}
+						else  {
+							// there's an error. Reset to the last stored value
+							$output[$key] = $options[$key];
+							// add error message
+							add_settings_error( 'mstw_tr_' . $key,
+												'mstw_tr_hex_color_error',
+												'Invalid hex color entered!',
+												'error');
+						}
+						break;
+					
+					// Integers
+					case 'table_photo_width':
+					case 'table_photo_height':
+					case 'table_border_width':
+					case 'profile_bio_border_width':
+					case 'gallery_photo_width':
+					case 'gallery_photo_height':
+					case 'gallery_tile_border_width':
+					case 'gallery_tile_radius':
+						//$message = ($coolFactor >= 10) ? "You're one cool dude!" : "Sorry, you aren't that cool!";
+						$output[$key] = ( $input[$key] != '' ) ? intval( $input[$key] ) : '';
+						break;
+						
+					// 0-1 stuff
+					case 'show_title':
+					case 'show_photos':
+						if ( $input[$key] == 1 ) {
+							$output[$key] = 1;
+						}
+						else {
+							$input[$key] = 0;
+						}
+						break;
+					// Sanitize all other settings as text
+					default:
+						$output[$key] = sanitize_text_field( $input[$key] );
+						// There should not be user/accidental errors in these fields
+						break;
+					
+				} // end switch
+			} // end if
+		} // end foreach
+		
+		return $output;
 	}
-	
-	// Loop through each of the incoming options
-	foreach( $input as $key => $value ) {
-		// Check to see if the current option has a value. If so, process it.
-		if( isset( $input[$key] ) ) {
-			switch ( $key ) {
-				// add the hex colors
-				case 'table_header_bkgd_color':
-				case 'table_header_text_color':
-				case 'table_border_color':
-				case 'table_title_color':
-				case 'table_even_text_color':
-				case 'table_even_bkgd_color':
-				case 'table_even_link_color':
-				case 'table_odd_text_color':
-				case 'table_odd_bkgd_color':
-				case 'table_odd_link_color':
-				case 'profile_header_bkgd_color':
-				case 'profile_header_text_color':
-				case 'profile_header_name_color':
-				case 'profile_header_position_color':
-				case 'profile_bio_heading_color':
-				case 'profile_bio_text_color':
-				case 'profile_bio_bkgd_color':
-				case 'profile_bio_border_color':
-					// validate the color for proper hex format
-					$sanitized_color = mstw_utl_sanitize_hex_color( $input[$key] );
-					
-					// decide what to do - save new setting 
-					// or display error & revert to last setting
-					if ( isset( $sanitized_color ) ) {
-						// blank input is valid
-						$output[$key] = $sanitized_color;
-					}
-					else  {
-						// there's an error. Reset to the last stored value
-						$output[$key] = $options[$key];
-						// add error message
-						add_settings_error( 'mstw_tr_' . $key,
-											'mstw_tr_hex_color_error',
-											'Invalid hex color entered!',
-											'error');
-					}
-					break;
-				
-				// Integers
-				case 'table_photo_width':
-				case 'table_photo_height':
-				case 'table_border_width':
-				case 'profile_bio_border_width':
-					$output[$key] = intval( $input[$key] );
-					break;
-					
-				// 0-1 stuff
-				case 'show_title':
-				case 'show_photos':
-					if ( $input[$key] == 1 ) {
-						$output[$key] = 1;
-					}
-					else {
-						$input[$key] = 0;
-					}
-					break;
-				// Sanitize all other settings as text
-				default:
-					$output[$key] = sanitize_text_field( $input[$key] );
-					// There should not be user/accidental errors in these fields
-					break;
-				
-			} // end switch
-		} // end if
-	} // end foreach
-	
-	return $output;
-}
 
-/*
-
+	/*
 	//------------------------------------------------------------------
 	// Add admin_notices action - need to look at this more someday
 	
@@ -1029,5 +1153,5 @@ function mstw_cs_validate_settings( $input ) {
 	function mstw_tr_admin_notices() {
 		settings_errors( );
 	}
-*/
+	*/
 ?>

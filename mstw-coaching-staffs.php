@@ -125,20 +125,73 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		//bio_bkgd_color
 		echo ".coach-bio { \n";
 			echo mstw_cs_build_css_rule( $options, 'profile_bio_bkgd_color', 'background-color' );
-		echo "} \n";
+		//echo "} \n";
 		//bio_border_color
-		echo ".coach-bio { \n";
+		//echo ".coach-bio { \n";
 			echo mstw_cs_build_css_rule( $options, 'profile_bio_border_color', 'border-color' );
-		echo "} \n";
+		//echo "} \n";
 		//bio_border_width
-		echo ".coach-bio { \n";
+		//echo ".coach-bio { \n";
 			echo mstw_cs_build_css_rule( $options, 'profile_bio_border_width', 'border-width', 'px' );
 		echo "} \n";
 		
 		// Rules for Coaches Galleries
+		echo ".coach-tile { \n";
+			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color' );
+			//echo mstw_cs_build_css_rule( $options, 'gallery_tile_radius', 'border-radius', 'px' );
+			//echo mstw_cs_build_css_rule( $options, 'gallery_tile_radius', '-moz-border-radius', 'px' );
+			echo 'border-radius: ' . $options['gallery_tile_radius'] . "px; \n";
+			echo '-moz-border-radius: ' . $options['gallery_tile_radius'] . "px; \n";
+			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_color', 'border-color' );
+			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_width', 'border-width', 'px' );
+			//echo 'border-width: ' . $options['gallery_tile_border_width'] . "px; \n";
+			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_width', 'border-width', 'px' );
+		echo "} \n";
+		
+		echo "h1.staff-head-title { \n";
+			echo mstw_cs_build_css_rule( $options, 'gallery_title_color', 'color' );
+		echo "} \n";
+		
+		echo ".coach-photo img, #coach-photo img { \n";
+			echo mstw_cs_build_css_rule( $options, 'gallery_photo_width', 'width', 'px' );
+			echo mstw_cs_build_css_rule( $options, 'gallery_photo_height', 'height', 'px' );
+		echo "} \n";
+		
+		echo ".coach-name-position a { \n";
+			echo mstw_cs_build_css_rule( $options, 'profile_header_name_color', 'color' );
+		echo "} \n";
+		
+		echo ".coach-name-position h2 { \n";
+			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color' );
+		echo "} \n";
 		
 		echo '</style>';
 		
+	}
+		
+	/*  This should move to mstw_utils
+	 *	rules_array - an array of rules for the specific css identifier
+	 *		rules_array['attrib'] = css attribute - something like "color" or "background"
+	 *		rules_array['option_name'] = element from $options that will provide the attrib's value
+	 *		rules_array['suffix'] = end of rule - something like "px" or "rem"
+	 */
+	
+	function mstw_build_css_rule( $css_id, $rules_array, $options_array ) {
+
+		$return_css = $css_id . "{ \n";
+		
+		foreach ( $rules_array as $rule ) {
+			$option_name = $rule['option_name'];
+			if ( isset( $options_array[$option_name] ) and !empty( $options_array[$option_name] ) ) {
+				$return_css .= $rule['attrib'] . ":" . $options_array[$option_name] . $rule['suffix'] . ";\n";	
+			} 
+		}
+		
+		$return_css .= "} \n";
+	
+		return $return_css;
+	
 	}
 	
 	function mstw_cs_build_css_rule( $options_array, $option_name, $css_rule, $suffix ) {
@@ -149,8 +202,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			return "";
 		}
 	}
-
-/* START HERE		
+		
 // ----------------------------------------------------------------
 // Set up localization (internationalization)
 	add_action( 'init', 'mstw_cs_load_localization' );
@@ -160,7 +212,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		load_plugin_textdomain( 'mstw-loc-domain', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 		
 	}
-*/
 
 // ----------------------------------------------------------------
 // Want to show coach post type on category pages
@@ -516,7 +567,7 @@ function mstw_cs_build_staff_table( $attribs ) {
 		$row_cnt = 1; 
 		
 		// Loop through the posts and make the rows
-		foreach($posts as $post){
+		foreach( $posts as $post ){
 			// set up some housekeeping to make styling in the loop easier
 			// NEEDS TO BE UPDATED
 			$even_or_odd_row = $even_and_odd[$row_cnt]; 
@@ -531,16 +582,21 @@ function mstw_cs_build_staff_table( $attribs ) {
 			// GET the corresponding coach post ID; this is used to plug the coaches data
 			$coach_id = get_post_meta( $post->ID, 'mstw_cs_position_coach', true );
 
-			// Add the coach's photo
-			// These should be settings
-			// $table_photo_height = 64;
-			// $table_photo_width = 64;
+			// Check to see if the single_coach.php template exists in 
+			// the active theme directory, if so add the links from the table
+			$single_coach_template = get_template_directory( ) . '/single-coach.php';
 			
 			if ( $show_photos ) {
-				//$row_string .= $row_td . get_post_meta( $post->ID, '_mstw_tr_number', true ) . '</td>';
 				$row_string .= $row_td;
+				
 				if ( has_post_thumbnail( $coach_id ) ) {
-					$row_string .= get_the_post_thumbnail( $coach_id, array($table_photo_width, $table_photo_height) ) . '</td>'; 
+					if ( file_exists( $single_coach_template ) ) {
+						$row_string .= '<a href="' .  get_permalink( $coach_id ) . '?position='. $post->ID . '">';
+						$row_string .= get_the_post_thumbnail( $coach_id, array($table_photo_width, $table_photo_height) ) .  '</a></td>'; 
+					}
+					else {  //No profile to link to
+						$row_string .= get_the_post_thumbnail( $coach_id, array($table_photo_width, $table_photo_height) ) .  '</a></td>';
+					}	
 				}
 				else {
 					$photo_file = plugin_dir_path( __FILE__ ) . 'images/default-photo-'. $staff . '.jpg';
@@ -557,10 +613,6 @@ function mstw_cs_build_staff_table( $attribs ) {
 			// ALWAYS add the coach's name
 			$coach_name = get_the_title( $coach_id );
 			
-			// Check to see if the single_coach.php template exists in the active theme directory
-			//		if so, add the links from the table
-			//
-			$single_coach_template = get_template_directory( ) . '/single-coach.php';
 			if ( file_exists( $single_coach_template ) ) {
 				//$coach_html = '<a href="' .  get_permalink( $coach_id ) . '" ';
 				$coach_html = '<a href="' .  get_permalink( $coach_id ) . '?position='. $post->ID . '">';

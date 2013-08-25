@@ -101,14 +101,24 @@ No.
 9. Display Settings admin page
 
 == Upgrade Notice ==
-This is the initial release. But for the future:
+*If the plugin is working fine for you, you don't need this upgrade. Primarily it added a collection of display settings and other details.*
 
 * When upgrading the existing coaches data will not be deleted. 
 * Any changes to the plugin stylesheet (css/mstw-cs-style.css)*will* be overwritten, so if you have customized that file you will want to save it before upgrading.
-* Any changes to the templates will be overwritten, so if you have customized either file for your theme, you will want to save it before upgrading.
-* ALWAYS BACKUP YOUR DATABASE WHEN UPGRADING PLUGINS ... JUST IN CASE. 
+* Any changes to the single-coach.php and taxonomy-staffs.php templates *will* be overwritten, so if you have customized either file for your theme, you will want to save it before upgrading.
+
+* ALWAYS BACKUP YOUR DATABASE WHEN UPGRADING PLUGINS ... JUST IN CASE.
+ 
 
 == Changelog ==
+
+= 0.2 =
+* Added numerous Display Settings, primarily settings for the gallery, including:
+Show/Hide Title, Title Color, Corner Style, Photo Size (width x height), Border Color, Border Width
+* Also added settings for the Single Coach's Profile Border and Width
+* Fancied up the styles on the gallery & profile photos in the default stylesheet
+* Added link to Coach's Profiles from coach's photos (as well as their names)
+
 
 = 0.1 =
 * Initial release.

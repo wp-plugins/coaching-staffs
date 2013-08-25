@@ -90,6 +90,12 @@
     text-decoration: none;
     color: #666;
 }
+.mstw-cs-table td img {
+	border: 1px solid #BBB;
+	padding: 5px;
+	background-color: #EEE;
+	margin-left: 10px;
+}
 
 /******************************************************
  * Styles for the SINGLE COACH PROFILE PAGE TEMPLATE
@@ -203,6 +209,7 @@ h1.staff-head-title {
 	background-color: #dce6f1; 			/*MS default - very light blue*/
 	-moz-border-radius: 15px;
 	border-radius: 15px;
+	border-style: solid;
 }
  
 .coach-tile img {
