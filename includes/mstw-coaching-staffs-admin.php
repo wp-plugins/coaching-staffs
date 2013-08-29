@@ -181,21 +181,51 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 	
 	function mstw_cs_coach_ui( $post ) {
 		// Retrieve the metadata values if they exist
-		$alma_mater = get_post_meta( $post->ID, 'mstw_cs_alma_mater', true );
 		$experience = get_post_meta( $post->ID, 'mstw_cs_experience', true );
-		   
+		$alma_mater = get_post_meta( $post->ID, 'mstw_cs_alma_mater', true );
+		$degree = get_post_meta( $post->ID, 'mstw_cs_degree', true );
+		$birth_date = get_post_meta( $post->ID, 'mstw_cs_birth_date', true );
+		$home_town = get_post_meta( $post->ID, 'mstw_cs_home_town', true );
+		$high_school = get_post_meta( $post->ID, 'mstw_cs_high_school', true );
+		$family = get_post_meta( $post->ID, 'mstw_cs_family', true );   
 		?>	
 		
 	   <table class="form-table">
+		
+		<tr valign="top">
+			<th scope="row"><label for="mstw_cs_experience" ><?php echo( __( 'Experience', 'mstw-loc-domain' ) . ':' ); ?> </label></th>
+			<td><input size="20" name="mstw_cs_experience"
+				value="<?php echo esc_attr( $experience ); ?>"/></td>
+		</tr>
 		<tr valign="top">
 			<th scope="row"><label for="mstw_cs_alma_mater" ><?php echo( __( 'Alma Mater', 'mstw-loc-domain' ) . ':' ); ?> </label></th>
-			<td><input maxlength="64" size="20" name="mstw_cs_alma_mater"
+			<td><input size="20" name="mstw_cs_alma_mater"
 				value="<?php echo esc_attr( $alma_mater ); ?>"/></td>
 		</tr>
 		<tr valign="top">
-			<th scope="row"><label for="mstw_cs_experience" ><?php echo( __( 'Experience', 'mstw-loc-domain' ) . ':' ); ?> </label></th>
-			<td><input maxlength="64" size="20" name="mstw_cs_experience"
-				value="<?php echo esc_attr( $experience ); ?>"/></td>
+			<th scope="row"><label for="mstw_cs_degree" ><?php echo( __( 'Degree', 'mstw-loc-domain' ) . ':' ); ?> </label></th>
+			<td><input size="20" name="mstw_cs_degree"
+				value="<?php echo esc_attr( $degree ); ?>"/></td>
+		</tr>	
+		<tr valign="top">
+			<th scope="row"><label for="mstw_cs_birth_date" ><?php echo( __( 'Birth Date', 'mstw-loc-domain' ) . ':' ); ?> </label></th>
+			<td><input size="20" name="mstw_cs_birth_date"
+				value="<?php echo esc_attr( $birth_date ); ?>"/></td>
+		</tr>
+		<tr valign="top">
+			<th scope="row"><label for="mstw_cs_home_town" ><?php echo( __( 'Home Town', 'mstw-loc-domain' ) . ':' ); ?> </label></th>
+			<td><input size="20" name="mstw_cs_home_town"
+				value="<?php echo esc_attr( $home_town ); ?>"/></td>
+		</tr>
+		<tr valign="top">
+			<th scope="row"><label for="mstw_cs_high_school" ><?php echo( __( 'High School', 'mstw-loc-domain' ) . ':' ); ?> </label></th>
+			<td><input size="20" name="mstw_cs_high_school"
+				value="<?php echo esc_attr( $high_school ); ?>"/></td>
+		</tr>
+		<tr valign="top">
+			<th scope="row"><label for="mstw_cs_family" ><?php echo( __( 'Family', 'mstw-loc-domain' ) . ':' ); ?> </label></th>
+			<td><textarea rows="5" cols="40" name="mstw_cs_family">
+				<?php echo esc_attr( $family ); ?> </textarea></td>
 		</tr>
 		
     </table> 
@@ -271,15 +301,27 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		global $typenow;
 		
 		if ( $typenow == 'coach' ) {
-			//First verify the required metadata is set and valid. If not, set default or return error
-			//if ( get_the_title( $post_id ) == '' ) {
-			//
-			//}
+			//Strip tags for safety before storing strings		
+			update_post_meta( $post_id, 'mstw_cs_experience', 
+					strip_tags( $_POST['mstw_cs_experience'] ) );
+					
 			update_post_meta( $post_id, 'mstw_cs_alma_mater', 
 					strip_tags( $_POST['mstw_cs_alma_mater'] ) );
 					
-			update_post_meta( $post_id, 'mstw_cs_experience', 
-					strip_tags( $_POST['mstw_cs_experience'] ) );
+			update_post_meta( $post_id, 'mstw_cs_degree', 
+					strip_tags( $_POST['mstw_cs_degree'] ) );
+					
+			update_post_meta( $post_id, 'mstw_cs_birth_date', 
+					strip_tags( $_POST['mstw_cs_birth_date'] ) );
+					
+			update_post_meta( $post_id, 'mstw_cs_home_town', 
+					strip_tags( $_POST['mstw_cs_home_town'] ) );
+					
+			update_post_meta( $post_id, 'mstw_cs_high_school', 
+					strip_tags( $_POST['mstw_cs_high_school'] ) );
+
+			update_post_meta( $post_id, 'mstw_cs_family', 
+					strip_tags( $_POST['mstw_cs_family'] ) );		
 		}
 		else if ( $typenow == 'staff_position' ) {
 			update_post_meta( $post_id, 'mstw_cs_position_coach', 
@@ -302,7 +344,12 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 			'title' 		=> __( 'Name', 'mstw-loc-domain' ),
 			'photo' 		=> __( 'Photo', 'mstw-loc-domain' ),
 			'alma_mater' 	=> __( 'Alma Mater', 'mstw-loc-domain' ),
-			'experience' 	=> __( 'Experience', 'mstw-loc-domain' )
+			'experience' 	=> __( 'Experience', 'mstw-loc-domain' ),
+			'degree' 	=> __( 'Degree', 'mstw-loc-domain' ),
+			'birth_date' 	=> __( 'Birth Date', 'mstw-loc-domain' ),
+			'home_town' 	=> __( 'Home Town', 'mstw-loc-domain' ),
+			'high_school' 	=> __( 'High School', 'mstw-loc-domain' ),
+			'family' 	=> __( 'Family', 'mstw-loc-domain' ),
 		);
 
 		return $columns;
@@ -327,13 +374,34 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					
 				}
 				break;
-			
-			case 'alma_mater' :
-				printf( '%s', get_post_meta( $post_id, 'mstw_cs_alma_mater', true ) );
-				break;
 				
 			case 'experience' :
 				printf( '%s', get_post_meta( $post_id, 'mstw_cs_experience', true ) );
+				break;
+				
+			case 'alma_mater' :
+				printf( '%s', get_post_meta( $post_id, 'mstw_cs_alma_mater', true ) );
+				break;
+		
+				
+			case 'degree' :
+				printf( '%s', get_post_meta( $post_id, 'mstw_cs_degree', true ) );
+				break;
+				
+			case 'birth_date' :
+				printf( '%s', get_post_meta( $post_id, 'mstw_cs_birth_date', true ) );
+				break;
+
+			case 'home_town' :
+				printf( '%s', get_post_meta( $post_id, 'mstw_cs_home_town', true ) );
+				break;
+				
+			case 'high_school' :
+				printf( '%s', get_post_meta( $post_id, 'mstw_cs_high_school', true ) );
+				break;
+				
+			case 'family' :
+				printf( '%s', nl2br( get_post_meta( $post_id, 'mstw_cs_family', true ) ) );
 				break;
 				
 			// Just break out of the switch statement for everything else. 
@@ -462,6 +530,9 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 			'mstw_cs_validate_settings'
 		);
 		
+		//Data fields
+		mstw_cs_data_fields_setup( );
+		
 		//Coaching Staff Table [shortcode] Settings
 		mstw_cs_table_settings_setup( );
 		
@@ -471,7 +542,301 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		//Coaching Staff Gallery Settings
 		mstw_cs_gallery_setup( );
 	}
+	
+	// --------------------------------------------------------------------------------------
+	// Data field visibility and labels	
+	function mstw_cs_data_fields_setup( ) {
+		$display_page = 'mstw-cs-display-settings'; 	//menu page slug on which to display
+		$page_section = 'mstw_cs_data_field_settings'; 	//page section slug on which to display
+		
+		$options = get_option( 'mstw_cs_options' );
+		
+		add_settings_section(
+			$page_section,  	//id attribute of tags
+			__( 'Data Field Settings', 'mstw-loc-domain' ),	//title of the section
+			'mstw_cs_data_fields_settings_text',	//callback to fill section with desired output - should echo
+			$display_page 	//page slug on which to display
+		);
+		
+		//Coach's name - label only
+		$args = array(	'id' => 'name_label',
+						'name' => 'mstw_cs_options[name_label]',
+						'value' => $options['name_label'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'name_label',
+			__( 'Name Label:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',     		//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+		
+		
+		//Show/Hide Position
+		$args = array(	'id' => 'show_position',
+						'name' => 'mstw_cs_options[show_position]',
+						'value' => $options['show_position'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'show_position',
+			__( 'Show Position:', 'mstw-loc-domain' ),
+			'mstw_utl_show_hide_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+			
+			
+			
+		//Position Label
+		$args = array(	'id' => 'position_label',
+						'name' => 'mstw_cs_options[position_label]',
+						'value' => $options['position_label'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'position_label',
+			__( 'Position Label:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+			
+		//Show/Hide Experience
+		$args = array(	'id' => 'show_experience',
+						'name' => 'mstw_cs_options[show_experience]',
+						'value' => $options['show_experience'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'show_experience',
+			__( 'Show Experience:', 'mstw-loc-domain' ),
+			'mstw_utl_show_hide_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);	
+			
+		//Experience Label
+		$args = array(	'id' => 'experience_label',
+						'name' => 'mstw_cs_options[experience_label]',
+						'value' => $options['experience_label'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'experience_label',
+			__( 'Experience Label:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+		
+		//Show/Hide Alma-mater
+		$args = array(	'id' => 'show_alma_mater',
+						'name' => 'mstw_cs_options[show_alma_mater]',
+						'value' => $options['show_alma_mater'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'show_alma_mater',
+			__( 'Show Alma Mater:', 'mstw-loc-domain' ),
+			'mstw_utl_show_hide_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);	
+			
+		//Alma Mater Label
+		$args = array(	'id' => 'alma_mater_label',
+						'name' => 'mstw_cs_options[alma_mater_label]',
+						'value' => $options['alma_mater_label'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'alma_mater_label',
+			__( 'Alma Mater Label:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',     		//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+			
+		//Show/Hide Degree
+		$args = array(	'id' => 'show_degree',
+						'name' => 'mstw_cs_options[show_degree]',
+						'value' => $options['show_degree'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'show_degree',
+			__( 'Show Degree:', 'mstw-loc-domain' ),
+			'mstw_utl_show_hide_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);	
+			
+		//Degree Label
+		$args = array(	'id' => 'degree_label',
+						'name' => 'mstw_cs_options[degree_label]',
+						'value' => $options['degree_label'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'degree_label',
+			__( 'Degree Label:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',     		//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+			
+		//Show/Hide Birth Date
+		$args = array(	'id' => 'show_birth_date',
+						'name' => 'mstw_cs_options[show_birth_date]',
+						'value' => $options['show_birth_date'],
+						'label' => 'Any format you choose; it is just a string to me.'
+						);
+						
+		add_settings_field(
+			'show_birth_date',
+			__( 'Show Birth Date:', 'mstw-loc-domain' ),
+			'mstw_utl_show_hide_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);	
+			
+		//Birth Date Label
+		$args = array(	'id' => 'birth_date_label',
+						'name' => 'mstw_cs_options[birth_date_label]',
+						'value' => $options['birth_date_label'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'birth_date_label',
+			__( 'Birth Date Label:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',     		//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+		
+		//Show/Hide Hometown
+		$args = array(	'id' => 'show_home_town',
+						'name' => 'mstw_cs_options[show_home_town]',
+						'value' => $options['show_home_town'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'show_home_town',
+			__( 'Show Hometown:', 'mstw-loc-domain' ),
+			'mstw_utl_show_hide_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);	
+			
+		//Hometown Label
+		$args = array(	'id' => 'home_town_label',
+						'name' => 'mstw_cs_options[home_town_label]',
+						'value' => $options['home_town_label'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'home_town_label',
+			__( 'Hometown Label:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',     		//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+		
+		//Show/Hide High School
+		$args = array(	'id' => 'show_high_school',
+						'name' => 'mstw_cs_options[show_high_school]',
+						'value' => $options['show_high_school'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'show_high_school',
+			__( 'Show High School:', 'mstw-loc-domain' ),
+			'mstw_utl_show_hide_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);	
+			
+		//Hometown Label
+		$args = array(	'id' => 'high_school_label',
+						'name' => 'mstw_cs_options[high_school_label]',
+						'value' => $options['high_school_label'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'high_school_label',
+			__( 'High School Label:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',     		//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
 
+		//Show/Hide Family
+		$args = array(	'id' => 'show_family',
+						'name' => 'mstw_cs_options[show_family]',
+						'value' => $options['show_family'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'show_family',
+			__( 'Show Family:', 'mstw-loc-domain' ),
+			'mstw_utl_show_hide_ctrl',     	//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);	
+			
+		//Hometown Label
+		$args = array(	'id' => 'family_label',
+						'name' => 'mstw_cs_options[family_label]',
+						'value' => $options['family_label'],
+						'label' => ''
+						);
+						
+		add_settings_field(
+			'family_label',
+			__( 'Family Label:', 'mstw-loc-domain' ),
+			'mstw_utl_text_ctrl',     		//Callback to display field
+			$display_page,					//Page to display field
+			$page_section, 					//Page section to display field
+			$args							//Callback arguments
+			);
+			
+		
+		
+	}
+	
 	// --------------------------------------------------------------------------------------
 	// Staff table settings	
 	function mstw_cs_table_settings_setup( ) {
@@ -491,7 +856,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array(	'id' => 'show_title',
 						'name' => 'mstw_cs_options[show_title]',
 						'value' => $options['show_title'],
-						'label' => __( 'Will show the table title (as "Staff Name" + "Coaching Staff")', 'mstw-loc-domain')
+						'label' => __( 'Will use "Staff Name" from Staff taxonomy as default. Hide to use another page element for the table title.', 'mstw-loc-domain')
 						);
 						
 		add_settings_field(
@@ -528,7 +893,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 						
 		add_settings_field(
 			'show_photos',
-			__( "Show Coaches' Photos:", 'mstw-loc-domain' ),
+			__( "Show Photos:", 'mstw-loc-domain' ),
 			'mstw_utl_show_hide_ctrl',		//Callback to display field
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
@@ -754,7 +1119,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 						
 		add_settings_field(
 			'profile_bio_heading_text',
-			__( 'Coach\'s Bio Heading:', 'mstw-loc-domain' ),
+			__( 'Profile Heading:', 'mstw-loc-domain' ),
 			'mstw_utl_text_ctrl',
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
@@ -802,7 +1167,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					 
 		add_settings_field(
 			'profile_header_name_color',
-			__( 'Coach\'s Name Color:', 'mstw-loc-domain' ),
+			__( 'Name Color:', 'mstw-loc-domain' ),
 			'mstw_utl_color_ctrl',
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
@@ -818,7 +1183,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					 
 		add_settings_field(
 			'profile_header_position_color',
-			__( 'Coach\'s Position Color:', 'mstw-loc-domain' ),
+			__( 'Position Color:', 'mstw-loc-domain' ),
 			'mstw_utl_color_ctrl',
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
@@ -834,7 +1199,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					 
 		add_settings_field(
 			'profile_bio_heading_color',
-			__( 'Coach\'s Bio Heading Color:', 'mstw-loc-domain' ),
+			__( 'Bio Section Heading Color:', 'mstw-loc-domain' ),
 			'mstw_utl_color_ctrl',
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
@@ -850,7 +1215,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					 
 		add_settings_field(
 			'profile_bio_text_color',
-			__( 'Coach\'s Bio Text Color:', 'mstw-loc-domain' ),
+			__( 'Bio Section Text Color:', 'mstw-loc-domain' ),
 			'mstw_utl_color_ctrl',
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
@@ -866,7 +1231,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					 
 		add_settings_field(
 			'profile_bio_bkgd_color',
-			__( 'Coach\'s Bio Background Color:', 'mstw-loc-domain' ),
+			__( 'Bio Section Background Color:', 'mstw-loc-domain' ),
 			'mstw_utl_color_ctrl',
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
@@ -882,7 +1247,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					 
 		add_settings_field(
 			'profile_bio_border_color',
-			__( 'Coach\'s Bio Border Color:', 'mstw-loc-domain' ),
+			__( 'Bio Section Border Color:', 'mstw-loc-domain' ),
 			'mstw_utl_color_ctrl',
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
@@ -898,7 +1263,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 						
 		add_settings_field(
 			'profile_bio_border_width',
-			__( 'Coach\'s Bio Border Width:', 'mstw-loc-domain' ),
+			__( 'Bio Section Border Width:', 'mstw-loc-domain' ),
 			'mstw_utl_text_ctrl',
 			$display_page,					//Page to display field
 			$page_section, 					//Page section to display field
@@ -925,7 +1290,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array(	'id' => 'show_gallery_title',
 						'name' => 'mstw_cs_options[show_gallery_title]',
 						'value' => $options['show_gallery_title'],
-						'label' => __( 'Will hide the gallery title if you want to use the page title or another element. (Default: show).', 'mstw-loc-domain')
+						'label' => __( 'Will use "Staff Name" from Staff taxonomy as default. Hide to use another page element for the table title.', 'mstw-loc-domain')
 						);
 						
 		add_settings_field(
@@ -1048,6 +1413,10 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 	function mstw_cs_table_settings_text( ) {
 		echo '<p>' . __( 'Enter the default settings for Staff Table/[shortcode]. These can be overridden by [shortcode] arguments.', 'mstw-loc-domain' ) .  '</p>';
 	}
+	
+	function mstw_cs_data_fields_settings_text( ) {
+		echo '<p>' . __( 'Enter the visibility and labels for the data fiels. The name field must always be displayed, but it can be re-labeled. Note that these settings can be overridden by [shortcode] arguments.', 'mstw-loc-domain' ) .  '</p>';
+	}
 	 
 	function mstw_cs_validate_settings( $input ) {
 		// Create our array for storing the validated options
@@ -1118,7 +1487,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					case 'gallery_tile_border_width':
 					case 'gallery_tile_radius':
 						//$message = ($coolFactor >= 10) ? "You're one cool dude!" : "Sorry, you aren't that cool!";
-						$output[$key] = ( $input[$key] != '' ) ? intval( $input[$key] ) : '';
+						$output[$key] = intval( $input[$key] );
 						break;
 						
 					// 0-1 stuff

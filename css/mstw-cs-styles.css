@@ -6,7 +6,7 @@
  *		- FOR THE SINGLE COACH PROFILE/BIO (single-coach.php page template)
  *		- FOR THE COACHING STAFF GALLERY  (taxonomy-staffs.php page template)
  ******************************************************************************/
- 
+
 /******************************************************************************
  * Styles for the COACHING STAFF TABLE SHORTCODE
  *	The tables have three 'row types': 
@@ -95,6 +95,8 @@
 	padding: 5px;
 	background-color: #EEE;
 	margin-left: 10px;
+	height: 64px;
+	width: 64px;
 }
 
 /******************************************************
@@ -104,11 +106,11 @@ article.coach.hentry {
 	padding-top: 0px;
 }
 
-header.coach-header {
+div.coach-header {
 	background-color: #dce6f1; 				/*MS default - very light blue*/
 	color: #000;							/*MS default - black*/
 	width: 100%;
-	height: 162px;
+	float: left;
 	font-size: 12px;
 	padding: 10px 0;
  }
@@ -259,4 +261,38 @@ h1.staff-head-title {
  
 .coach-info-container .coach-name-position {
 	padding: 0;
+}
+
+/******************************************************
+* Styles for the development site - girls-varsity-baskeball team 
+******************************************************/
+h1.staff-head-title.staff-head-title-varsity-basketball-girls {
+	color: #1775D7;
+}
+
+table.mstw-cs-table.mstw-cs-table-varsity-basketball-girls th {
+	background-color: #1775D7;
+	color: #F9BB2A;
+}
+
+table.mstw-cs-table.mstw-cs-table-varsity-basketball-girls td.mstw-cs-odd {
+	background-color: #F9BB2A;
+	color: #1775D7;
+}
+
+table.mstw-cs-table.mstw-cs-table-varsity-basketball-girls tr.mstw-cs-odd td.mstw-cs-odd a  {
+	color: #1775D7;
+}
+
+table.mstw-cs-table.mstw-cs-table-varsity-basketball-girls td.mstw-cs-even {
+	background-color: #1775D7;
+	color: #F9BB2A;
+}
+
+table.mstw-cs-table.mstw-cs-table-varsity-basketball-girls tr.mstw-cs-even td.mstw-cs-even a  {
+	color: #F9BB2A;
+}
+
+.mstw-cs-table td img {
+	margin-left: 2px;
 }

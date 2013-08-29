@@ -69,7 +69,11 @@
 		
 		$experience = get_post_meta( $coach_id, 'mstw_cs_experience', true );
 		$alma_mater = get_post_meta( $coach_id, 'mstw_cs_alma_mater', true );
-		
+		$degree = get_post_meta( $coach_id, 'mstw_cs_degree', true );
+		$birth_date = get_post_meta( $coach_id, 'mstw_cs_birth_date', true );
+		$home_town = get_post_meta( $coach_id, 'mstw_cs_home_town', true );
+		$high_school = get_post_meta( $coach_id, 'mstw_cs_high_school', true );
+		$family = nl2br( get_post_meta( $coach_id, 'mstw_cs_family', true ) );	
 		?> 
 		
 		<div class="coach-tile coach-tile-<?php echo( $staff_slug ) ?>">
@@ -125,8 +129,10 @@
 				
 				<div class="coach-name-position"> 
 					<h1><?php echo $coach_html ?></h1>
-					<h2><?php echo $position ?></h2>
-					</div>
+					<?php if ( $options['show_position'] == 1 ) { ?>
+						<h2><?php echo $position ?></h2>
+					<?php } ?>
+				</div>
 				
 			
 				<table class="coach-info">
@@ -136,23 +142,40 @@
 					$new_cell = ':</td><td class="rt-col">'; //colon is for the end of the title
 					$row_end = '</td></tr>';
 					
-					// POSITION
-					//if( $options['show_position'] ) {
-						//echo $row_start . $options['position_label'] . $new_cell .  $position . $row_end;
-						//echo $row_start . 'Position' . $new_cell .  $position . $row_end;
-					//}
-					
 					//EXPERIENCE
-					//if( $options['show_experience'] ) {
-						//echo $row_start . $options['experience_label'] . $new_cell .  $experience . $row_end;
-						echo $row_start . 'Experience' . $new_cell .  $experience . $row_end;
-					//}
+					if( $options['show_experience'] ) {
+						echo $row_start . $options['experience_label'] . $new_cell .  $experience . $row_end;
+					}
 					
 					//ALMA MATER
-					//if( $options['show_year'] ) {
-						//echo $row_start . $options['year_label'] . $new_cell .  $year . $row_end;
-						echo $row_start . 'Alma Mater' . $new_cell .  $alma_mater . $row_end;
-					//}
+					if( $options['show_alma_mater'] ) {
+						echo $row_start . $options['alma_mater_label'] . $new_cell .  $alma_mater . $row_end;
+					}
+					
+					// DEGREE
+					if( $options['show_degree'] ) {
+						echo $row_start . $options['degree_label'] . $new_cell .  $degree . $row_end;
+					}
+					
+					// BIRTH DATE
+					if( $options['show_birth_date'] ) {
+						echo $row_start . $options['birth_date_label'] . $new_cell .  $birth_date . $row_end;
+					}
+					
+					// HOMETOWN
+					if( $options['show_home_town'] ) {
+						echo $row_start . $options['home_town_label'] . $new_cell .  $home_town . $row_end;
+					}
+					
+					// HIGH SCHOOL
+					if( $options['show_high_school'] ) {
+						echo $row_start . $options['high_school_label'] . $new_cell .  $high_school . $row_end;
+					}
+					
+					// FAMILY
+					if( $options['show_family'] ) {
+						echo $row_start . $options['family_label'] . $new_cell .  $family . $row_end;
+					}
 					
 					?>
 					

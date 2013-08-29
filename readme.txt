@@ -25,6 +25,14 @@ This plugin is designed to handle some challenges unique to high school coaching
 
 *It is important that you enter/add data in this order because the coach and staff must be entered before they can be associated with a staff position.*
 
+To display a staff table via the short code enter 
+`[mstw-cs-table staff=staff-slug]`
+on the TEXT or HTML tab, NOT the VISUAL tab, of a page, post, or text widget. You MUST provide a `staff` parameter or nothing will be displayed. Many other parameters are available, which you can read about on the [Shoal Summit Solutions](http://shoalsummitsolutions.com/category/users-manuals/cs-plugin/) site. Looking the samples on [my plugin development site](http://shoalsummitsolutions.com/dev/coaching-staffs/) is highly recommended.
+
+To learn how to install and use the single coach profile page and the coaching staff gallery page, please read the instructions on the Installation tab and on the [Shoal Summit Solutions](http://shoalsummitsolutions.com/category/users-manuals/cs-plugin/) site.
+
+The plugin is internationalized and ready for translation. I am happy to help translators
+
 **NOTES:**
 The Coaching Staffs plugin is the fifth in a set of plugins supporting the My Sports Team Website (MSTW) framework. Others include Game Locations, Game Schedules, Team Rosters, and League Standings, which are all now available on [WordPress.org](http://wordpress.org/extend/plugins/). Statistics, Sponsors, Frequently Asked Questions, Users Guide, and more are planned for future development. If you are a developer and there is one you would really like to have, or if you would like to participate in the development of one, please contact me (mark@shoalsummitsolutions.com).
 
@@ -57,13 +65,20 @@ Basic installation the **MANUAL** way:
 
 == Frequently Asked Questions ==
 
+= Where can I get more help? =
+In the [plugin's forum](http://wordpress.org/support/plugin/coaching-staffs) on the Wordpress site, in the [Shoal Summit Solutions documentation](http://shoalsummitsolutions.com/category/users-manuals/cs-plugin/), and on [my plugin development site](http://shoalsummitsolutions.com/dev/coaching-staffs/). (See the next FAQ.)
+
+= Where can I find some examples of the Coaching Staff plugin in action? =
+Several examples are provided on [my plugin development site](http://shoalsummitsolutions.com/dev/coaching-staffs/). This is where I test and debug the plugin and the first place I consult when a question is posed on the WordPress forums. So it might be worth a glance.
+
 = How do I change the look (text colors, background colors, etc.) of the coaching staff tables, the coaches gallery, and/or the single coach profile page? =
-In this version, you can use the Display Settings admin screen (screenshot-9) to style the table and single coach views or you can always do so by editing the plugin's stylesheet (/css/mstw-cs-styles.css) and/or the single-coach.php page template. There are NO display settings for the gallery view in this initial release, so you will have to edit the plugin's stylesheet and/or the taxonomy-staffs.php page template. 
+You can edit the plugin stylesheet (/css/mstw-cs-styles.css) to control all the displays as a group, or each staff's displays individually. You can use the Display Settings admin screen (screenshot-9) to style the table, single coach profile, and coaching staff gallery views. NOTE that the settings on the Display Settings admin screen will override the stylesheet. So if you plan to edit the stylesheet, you may want to leave all the display settings blank. You may also have to edit the single-coach.php and/or the taxonomy-staffs.php page templates to get things to 'fit' within the constraints of your theme. 
 
 = How do I get my coaches images to work? =
 A coach's image is loaded as the featured image when editing a coach and then appears on the single coach profile page and the coaches gallery page(s). By default, these images should be 150x150 pixels, or they may be distorted when displayed. You may also need to set the thumbnail size to 150x150 in the Admin Dashboard->Settings->Media admin screen. (This may cause problems with your theme, but it's what is there right now. It will be upgraded in the next release of the plugin.) You can set the size for this image in the Coaches table on the Display Settings page. It should be the same aspect ratio as the uploaded image. If there is no image for a coach, the plugin will look for these two files in the following order:
 
 1. images/default-photo-staff-slug.jpg - which will be the default image for a particular staff, maybe the team logo, that you will have to load into that directory yourself. In this release it should be 150x150 pixels, or at least have the same square aspect ratio, or it will be distorted.
+
 2. images/default-photo.jpg - this is the 'no image found' image that is provided with the plugin.
 
 = The links from the coaches' names to their profile/bio pages appear to be broken. What did I do wrong? =
@@ -101,6 +116,7 @@ No.
 9. Display Settings admin page
 
 == Upgrade Notice ==
+
 *If the plugin is working fine for you, you don't need this upgrade. Primarily it added a collection of display settings and other details.*
 
 * When upgrading the existing coaches data will not be deleted. 
@@ -113,12 +129,12 @@ No.
 == Changelog ==
 
 = 0.2 =
-* Added numerous Display Settings, primarily settings for the gallery, including:
+* Added show/hide controls for all data fields to Display Settings.
+* Added numerous other Display Settings, primarily settings for the gallery, including:
 Show/Hide Title, Title Color, Corner Style, Photo Size (width x height), Border Color, Border Width
 * Also added settings for the Single Coach's Profile Border and Width
 * Fancied up the styles on the gallery & profile photos in the default stylesheet
-* Added link to Coach's Profiles from coach's photos (as well as their names)
-
+* Added link to Coach's Profiles from coach's photos (as well as their names) 
 
 = 0.1 =
 * Initial release.

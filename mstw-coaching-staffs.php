@@ -98,7 +98,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		
 		
 		//Rules for Single Coach
-		echo "header.coach-header { \n";
+		echo "div.coach-header { \n";
 			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color' );
 		echo "} \n";
 		
@@ -110,7 +110,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color' );
 		echo "} \n";
 		
-		echo "header.coach-header table { \n";
+		echo "div.coach-header table { \n";
 			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color' );
 		echo "} \n";
 		 
@@ -456,6 +456,7 @@ add_shortcode( 'mstw-cs-table', 'mstw_cs_shortcode_handler' );
 
 
 function mstw_cs_shortcode_handler( $atts ){
+
 	// get the options set in the admin screen
 	$options = get_option( 'mstw_cs_options' );
 	//$output = '<pre>OPTIONS:' . print_r( $options, true ) . '</pre>';
@@ -484,9 +485,6 @@ function mstw_cs_shortcode_handler( $atts ){
 // into a pretty table.
 // --------------------------------------------------------------------------------------
 function mstw_cs_build_staff_table( $attribs ) {	
-	// This is temporary
-	//$show_experience = 1;
-	//$show_alma_mater = 1;
 	
 	extract( $attribs );
 	
@@ -501,14 +499,14 @@ function mstw_cs_build_staff_table( $attribs ) {
 	//$options = get_option( 'mstw_cs_options' );
 	//extract( $options );
 	
-	// Show the table title = Name of Staff + Coaching Staff
+	// Show the table title = Name of Staff
 	if ( $show_title ) {
 		$term_array = get_term_by( 'slug', $staff, 'staffs' );
 		$staff_name = $term_array->name;
 		
 		$staff_class = 'staff-head-title staff-head-title-' . $staff;
 		
-		$output .= '<h1 class="' . $staff_class . '">' . $staff_name . ' Coaching Staff </h1>';
+		$output .= '<h1 class="' . $staff_class . '">' . $staff_name . '</h1>';
 	}
 	
 	// Get the staff roster		
@@ -534,30 +532,50 @@ function mstw_cs_build_staff_table( $attribs ) {
 		
 		// Check the PHOTO Column
 		if ( $show_photos ) {
-			//$output .= $th_temp . $photo_label . '</th>';
-			$output .= $th_temp . 'Photo</th>';
+			$output .= $th_temp . $photo_label . '</th>';
 		}
 		
 		// Always show the NAME column
-		//$output .= $th_temp . $name_label . '</th>';
-		$output .= $th_temp . 'Name</th>';
+		$output .= $th_temp . $name_label . '</th>';
 		
 		// show the POSITION column
 		if ( $show_position ) {
-			//$output .= $th_temp . $position_label . '</th>';
-			$output .= $th_temp . 'Position</th>';
+			$output .= $th_temp . $position_label . '</th>';
 		}
 		
 		// Check the EXPERIENCE column
 		if ( $show_experience ) {
-			//$output .= $th_temp . $experience_label . '</th>';
-			$output .= $th_temp . 'Experience</th>';
+			$output .= $th_temp . $experience_label . '</th>';
 		}
 		
 		// Check the ALMA MATER column
 		if ( $show_alma_mater ) {
-			//$output .= $th_temp . $alma_mater_label . '</th>';
-			$output .= $th_temp . 'Alma Mater</th>';
+			$output .= $th_temp . $alma_mater_label . '</th>';
+		}
+		
+		// show the DEGREE column
+		if ( $show_degree ) {
+			$output .= $th_temp . $degree_label . '</th>';
+		}
+		
+		// Check the BIRTH DATE column
+		if ( $show_birth_date ) {
+			$output .= $th_temp . $birth_date_label . '</th>';
+		}
+		
+		// Check the HOMETOWN column
+		if ( $show_home_town ) {
+			$output .= $th_temp . $home_town_label . '</th>';
+		}
+		
+		// Check the HIGH SCHOOL column
+		if ( $show_high_school ) {
+			$output .= $th_temp . $high_school_label . '</th>';
+		}
+		
+		// Check the FAMILY column
+		if ( $show_family ) {
+			$output .= $th_temp . $family_label . '</th>';
 		}
 		
         $output = $output . '</tr></thead>';
@@ -638,6 +656,31 @@ function mstw_cs_build_staff_table( $attribs ) {
 			// Add the coach's alma mater
 			if ( $show_alma_mater ) {
 				$row_string .= $row_td . get_post_meta( $coach_id, 'mstw_cs_alma_mater', true ) . '</td>';
+			}
+			
+			// Add the coach's degree
+			if ( $show_degree ) {
+				$row_string .= $row_td . get_post_meta( $coach_id, 'mstw_cs_degree', true ) . '</td>';
+			}
+			
+			// Add the coach's birth date
+			if ( $show_birth_date ) {
+				$row_string .= $row_td . get_post_meta( $coach_id, 'mstw_cs_birth_date', true ) . '</td>';
+			}
+			
+			// Add the coach's home town
+			if ( $show_home_town ) {
+				$row_string .= $row_td . get_post_meta( $coach_id, 'mstw_cs_home_town', true ) . '</td>';
+			}
+			
+			// Add the coach's high school
+			if ( $show_high_school ) {
+				$row_string .= $row_td . get_post_meta( $coach_id, 'mstw_cs_high_school', true ) . '</td>';
+			}
+			
+			// Add the coach's family
+			if ( $show_family ) {
+				$row_string .= $row_td . nl2br( get_post_meta( $coach_id, 'mstw_cs_family', true ) ) . '</td>';
 			}
 			
 			// Add the row to the output string
