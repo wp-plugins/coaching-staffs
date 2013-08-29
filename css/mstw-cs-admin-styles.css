@@ -1,0 +1,15 @@
+/****************************************************************************** 
+ * MSTW Coaching Staffs Plugin ADMIN CSS File (mstw-cs-admin-styles.css)
+ *	Provides 'MSTW styling' on Coaching Staffs admin pages
+ *
+ *  Loaded (enqueued) by mstw-coaching-staffs-admin.php
+ *		
+ ******************************************************************************/
+ 
+/*-----------------------------------------------------------------------------
+ * Customize the icon at the top of the admin screens
+ *-----------------------------------------------------------------------------*/
+
+#icon-coaching-staffs.icon32 {
+	background: url("/coaching-staffs/images/mstw-logo-32x32.png") no-repeat;
+}
