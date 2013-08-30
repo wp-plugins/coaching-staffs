@@ -584,6 +584,9 @@ function mstw_cs_build_staff_table( $attribs ) {
 		$even_and_odd = array('even', 'odd');
 		$row_cnt = 1; 
 		
+		// Used to determine whether or not to add links from name & photo to player profiles 
+		$single_coach_template = get_template_directory( ) . '/single-coach.php';
+			
 		// Loop through the posts and make the rows
 		foreach( $posts as $post ){
 			// set up some housekeeping to make styling in the loop easier
@@ -600,9 +603,7 @@ function mstw_cs_build_staff_table( $attribs ) {
 			// GET the corresponding coach post ID; this is used to plug the coaches data
 			$coach_id = get_post_meta( $post->ID, 'mstw_cs_position_coach', true );
 
-			// Check to see if the single_coach.php template exists in 
-			// the active theme directory, if so add the links from the table
-			$single_coach_template = get_template_directory( ) . '/single-coach.php';
+			
 			
 			if ( $show_photos ) {
 				$row_string .= $row_td;
