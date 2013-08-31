@@ -1486,7 +1486,6 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					case 'gallery_photo_height':
 					case 'gallery_tile_border_width':
 					case 'gallery_tile_radius':
-						//$message = ($coolFactor >= 10) ? "You're one cool dude!" : "Sorry, you aren't that cool!";
 						$output[$key] = intval( $input[$key] );
 						break;
 						
@@ -1500,6 +1499,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 							$input[$key] = 0;
 						}
 						break;
+						
 					// Sanitize all other settings as text
 					default:
 						$output[$key] = sanitize_text_field( $input[$key] );
