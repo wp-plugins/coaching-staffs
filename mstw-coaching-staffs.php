@@ -603,8 +603,6 @@ function mstw_cs_build_staff_table( $attribs ) {
 			// GET the corresponding coach post ID; this is used to plug the coaches data
 			$coach_id = get_post_meta( $post->ID, 'mstw_cs_position_coach', true );
 
-			
-			
 			if ( $show_photos ) {
 				$row_string .= $row_td;
 				
@@ -614,7 +612,7 @@ function mstw_cs_build_staff_table( $attribs ) {
 						$row_string .= get_the_post_thumbnail( $coach_id, array($table_photo_width, $table_photo_height) ) .  '</a></td>'; 
 					}
 					else {  //No profile to link to
-						$row_string .= get_the_post_thumbnail( $coach_id, array($table_photo_width, $table_photo_height) ) .  '</a></td>';
+						$row_string .= get_the_post_thumbnail( $coach_id, array($table_photo_width, $table_photo_height) ) .  '</td>';
 					}	
 				}
 				else {
