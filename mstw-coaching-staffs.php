@@ -68,67 +68,67 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		echo "} \n";
 		
 		echo "th.mstw-cs-table-head { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_header_text_color', 'color' );
-			echo mstw_cs_build_css_rule( $options, 'table_header_bkgd_color', 'background-color' );
-			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color' );
+			echo mstw_cs_build_css_rule( $options, 'table_header_text_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_header_bkgd_color', 'background-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color', '' );
 			echo mstw_cs_build_css_rule( $options, 'table_border_width', 'border-width', 'px' );
 		echo "} \n";
 		
 		echo "td.mstw-cs-odd { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_odd_text_color', 'color' );
-			echo mstw_cs_build_css_rule( $options, 'table_odd_bkgd_color', 'background-color' );
-			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color' );
+			echo mstw_cs_build_css_rule( $options, 'table_odd_text_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_odd_bkgd_color', 'background-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color', '' );
 			echo mstw_cs_build_css_rule( $options, 'table_border_width', 'border-width', 'px' );
 		echo "} \n";
 		
 		echo "tr.mstw-cs-odd  td.mstw-cs-odd a { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_odd_link_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'table_odd_link_color', 'color', '' );
 		echo "} \n";
 		
 		echo "td.mstw-cs-even { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_even_text_color', 'color' );
-			echo mstw_cs_build_css_rule( $options, 'table_even_bkgd_color', 'background-color' );
-			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color' );
+			echo mstw_cs_build_css_rule( $options, 'table_even_text_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_even_bkgd_color', 'background-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color', '' );
 			echo mstw_cs_build_css_rule( $options, 'table_border_width', 'border-width', 'px' );
 		echo "} \n";
 		
 		echo "tr.mstw-cs-even td.mstw-cs-even a { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_even_link_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'table_even_link_color', 'color', '' );
 		echo "} \n";
 		
 		
 		//Rules for Single Coach
 		echo "div.coach-header { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color', '' );
 		echo "} \n";
 		
 		echo "#coach-name h1 { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_name_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_name_color', 'color', '' );
 		echo "} \n";
 		
 		echo "#coach-name h2 { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color', '' );
 		echo "} \n";
 		
 		echo "div.coach-header table { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color', '' );
 		echo "} \n";
 		 
 		//bio_heading_color
 		echo ".coach-bio h1 { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_bio_heading_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_bio_heading_color', 'color', '' );
 		echo "} \n";
 		//bio_text_color
 		echo ".coach-bio p { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_bio_text_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_bio_text_color', 'color', '' );
 		echo "} \n";
 		//bio_bkgd_color
 		echo ".coach-bio { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_bio_bkgd_color', 'background-color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_bio_bkgd_color', 'background-color', '' );
 		//echo "} \n";
 		//bio_border_color
 		//echo ".coach-bio { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_bio_border_color', 'border-color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_bio_border_color', 'border-color', '' );
 		//echo "} \n";
 		//bio_border_width
 		//echo ".coach-bio { \n";
@@ -137,20 +137,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		
 		// Rules for Coaches Galleries
 		echo ".coach-tile { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color' );
-			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color', '' );
 			//echo mstw_cs_build_css_rule( $options, 'gallery_tile_radius', 'border-radius', 'px' );
 			//echo mstw_cs_build_css_rule( $options, 'gallery_tile_radius', '-moz-border-radius', 'px' );
 			echo 'border-radius: ' . $options['gallery_tile_radius'] . "px; \n";
 			echo '-moz-border-radius: ' . $options['gallery_tile_radius'] . "px; \n";
-			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_color', 'border-color' );
+			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_color', 'border-color', '' );
 			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_width', 'border-width', 'px' );
 			//echo 'border-width: ' . $options['gallery_tile_border_width'] . "px; \n";
 			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_width', 'border-width', 'px' );
 		echo "} \n";
 		
 		echo "h1.staff-head-title { \n";
-			echo mstw_cs_build_css_rule( $options, 'gallery_title_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'gallery_title_color', 'color', '' );
 		echo "} \n";
 		
 		echo ".coach-photo img, #coach-photo img { \n";
@@ -159,11 +159,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		echo "} \n";
 		
 		echo ".coach-name-position a { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_name_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_name_color', 'color', '' );
 		echo "} \n";
 		
 		echo ".coach-name-position h2 { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color', '' );
 		echo "} \n";
 		
 		echo '</style>';
