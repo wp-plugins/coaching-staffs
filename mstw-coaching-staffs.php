@@ -3,7 +3,7 @@
 Plugin Name: Coaching Staffs
 Plugin URI: http://wordpress.org/extend/plugins/coaching-staffs/
 Description: The Coaching Staffs Plugin defines a custom type - Coach - for use in the MSTW framework. It generates a coaching staff table, a coaching staff gallery, and a single coach profile.
-Version: 0.1
+Version: 0.2
 Author: Mark O'Donnell
 Author URI: http://shoalsummitsolutions.com
 */
