@@ -11,199 +11,165 @@
  * @subpackage Coaching_Staffs
  * @since Coaching Staffs 0.1
  */
+ ?>
 
-	get_header(); 
+	<?php get_header(); ?>
 
-?>
+	<div id="primary">
+		<div id="content" role="main">
 
-<div id="primary">
-	<div id="content" role="main">
+			<?php while ( have_posts() ) : the_post(); ?>
 
-	<?php while ( have_posts() ) : the_post(); ?>
+				<nav id="nav-single">
+					<h3 class="assistive-text"><?php _e( 'Post navigation', 'twentyeleven' ); ?></h3>
+					<span class="nav-previous">
+						<?php $back =$_SERVER['HTTP_REFERER'];
+						if( isset( $back ) && $back != '' ) { 
+							echo '<a href="' . $back . '">';?>
+							<span class="meta-nav">&larr;</span>Return to roster</a>
+						<?php
+						}?>
+					</span> <!-- .nav-previous -->
+				</nav><!-- #nav-single -->
 
-		<nav id="nav-single">
-			<h3 class="assistive-text"><?php _e( 'Post navigation', 'twentyeleven' ); ?></h3>
-			<span class="nav-previous">
-			<?php $back =$_SERVER['HTTP_REFERER'];
-			if( isset( $back ) && $back != '' ) { 
-				echo '<a href="' . $back . '"><span class="meta-nav">&larr;</span>Return to roster</a>';
-			}?>
-		</nav><!-- #nav-single -->
+				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-		<?php
-		// Get the necessary data
-		$name = get_the_title( $post->ID );
-		$position = get_the_title( $_GET['position'] );
-		$term_list = wp_get_post_terms( $_GET['position'], 'staffs' );
-		//print_r( $term_list );
-		//$staff_slug = $term_list[0]['slug'];
-		if ( !empty( $term_list ) ) {
-            //foreach ( $term_list as $term )
-                $staff_slug = $term_list[0]->slug;
-        }
-		
-		$experience = get_post_meta($post->ID, 'mstw_cs_experience', true );
-		$alma_mater = get_post_meta($post->ID, 'mstw_cs_alma_mater', true );
-		$degree = get_post_meta( $post->ID, 'mstw_cs_degree', true );
-		$birth_date = get_post_meta( $post->ID, 'mstw_cs_birth_date', true );
-		$home_town = get_post_meta( $post->ID, 'mstw_cs_home_town', true );
-		$high_school = get_post_meta( $post->ID, 'mstw_cs_high_school', true );
-		$family = nl2br( get_post_meta( $post->ID, 'mstw_cs_family', true ) );
-		
-		$options = get_option( 'mstw_cs_options' );
-		extract( $options );
-		
-		//echo '<h2>ORIG OPTIONS</h2>';
-		//print_r( $settings );
-				
-		//$options = mstw_cs_set_fields( $format, $options );
-		//echo '<h2>FORMAT: ' . $format . ' OPTIONS</h2>';
-		//print_r( $settings );
-					
-		//echo '<h2>REVISED OPTIONS</h2>';
-		//$options = wp_parse_args( $settings, $options );
-		//print_r( $options );
-		
-		//$sp_content_title = $options['sp_content_title'];
-		//$sp_image_width = $options['sp_image_width'];
-		//$sp_image_height = $options['sp_image_height'];
-		
-		// THIS WON'T WORK!!
-		
-		// Single Coach Page title
-		/*$html = '<h1 class="coach-head-title ';
-		$coach_staffs = wp_get_object_terms($post->ID, 'staffs');
-		if( !empty( $coach_staffs ) ) {
-			if( !is_wp_error( $coach_staffs ) ) {
-				foreach( $coach_staffs as $staff ) {
-					$team_name = $team->name;
-					$team_slug = $team->slug;
-					$html .=  'coach-head-title-' . $team_slug . ' ';
-					//echo '<h1 class="coach-head-title" style="color:' . $sp_main_text_color . ';">' . $team_name. '</h1>'; 
-				}
-				$html .= '">';
-			}
-		}
-		$html .= $team_name . '</h1>';
-		
-		echo $html;
-		*/
-		?>
-		
-		<div class="coach-header coach-header-<?php echo( $staff_slug ) ?>">
-			<!-- First, figure out the coach's photo -->
-			<div id = "coach-photo">
-				<?php 
-				// Check the settings for the height and width of the photo
-				// Default is 150 x 150
-				$img_width = ( $sp_image_width == '' ) ? 150 : $sp_image_width;
-				$img_height = ( $sp_image_height == '' ) ? 150 : $sp_image_height;
-				
-				// check if the post has a Post Thumbnail assigned to it.
-				 if ( has_post_thumbnail( $coach_id ) ) { 
-					//Get the photo file;
-					$photo_file_url = wp_get_attachment_thumb_url( get_post_thumbnail_id( $coach_id ) );
-					$alt = 'Photo of ' . $name;
-				} else {
-					// Default image is tied to the staff taxonomy. 
-					// Try to load default-photo-staff-slug.jpg, If it does not exst,
-					// Then load default-photo.jpg from the plugin -->
-					$photo_file = WP_PLUGIN_DIR . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
-					if ( file_exists( $photo_file ) ) {
-						$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
-					}
-					else {
-						$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '.jpg';
-						$alt = "Photo not found.";
-					}
+				<?php
+				// Get the necessary data
+				$name = get_the_title( $post->ID );
+				$position = get_the_title( $_GET['position'] );
+				$term_list = wp_get_post_terms( $_GET['position'], 'staffs' );
+				//print_r( $term_list );
+				//$staff_slug = $term_list[0]['slug'];
+				if ( !empty( $term_list ) ) {
+					//foreach ( $term_list as $term )
+						$staff_slug = $term_list[0]->slug;
 				}
 				
-				echo( '<img src="' . $photo_file_url . '" alt="' . $alt . '" width="' . $img_width . '" height="' . $img_height . '" />' );
+				$experience = get_post_meta($post->ID, 'mstw_cs_experience', true );
+				$alma_mater = get_post_meta($post->ID, 'mstw_cs_alma_mater', true );
+				$degree = get_post_meta( $post->ID, 'mstw_cs_degree', true );
+				$birth_date = get_post_meta( $post->ID, 'mstw_cs_birth_date', true );
+				$home_town = get_post_meta( $post->ID, 'mstw_cs_home_town', true );
+				$high_school = get_post_meta( $post->ID, 'mstw_cs_high_school', true );
+				$family = nl2br( get_post_meta( $post->ID, 'mstw_cs_family', true ) );
+				
+				$options = get_option( 'mstw_cs_options' );
+				extract( $options );
 				?>
-			</div> <!-- #coach-photo -->
-			
-			<!-- Figure out the coach name and number -->
-			<div id="coach-name-position"> 
-				<div id="coach-name">
-				<h1><?php echo $name; ?></h1> 
-				<!-- get the position ID from the URL -->
-				<h2><?php echo $position; ?> </h2>
-				</div> <!-- #coach-name -->
-			
-			
-				<table class="coach-info">
-				<tbody>
-					<?php 
-					$row_start = '<tr><td class="lf-col">';
-					$new_cell = ':</td><td class="rt-col">'; //colon is for the end of the title
-					$row_end = '</td></tr>';
-					
-					//EXPERIENCE
-					if( $options['show_experience'] ) {
-						echo $row_start . $options['experience_label'] . $new_cell .  $experience . $row_end;
-					}
-					
-					//ALMA MATER
-					if( $options['show_alma_mater'] ) {
-						echo $row_start . $options['alma_mater_label'] . $new_cell .  $alma_mater . $row_end;
-					}
-					
-					// DEGREE
-					if( $options['show_degree'] ) {
-						echo $row_start . $options['degree_label'] . $new_cell .  $degree . $row_end;
-					}
-					
-					// BIRTH DATE
-					if( $options['show_birth_date'] ) {
-						echo $row_start . $options['birth_date_label'] . $new_cell .  $birth_date . $row_end;
-					}
-					
-					// HOMETOWN
-					if( $options['show_home_town'] ) {
-						echo $row_start . $options['home_town_label'] . $new_cell .  $home_town . $row_end;
-					}
-					
-					// HIGH SCHOOL
-					if( $options['show_high_school'] ) {
-						echo $row_start . $options['high_school_label'] . $new_cell .  $high_school . $row_end;
-					}
-					
-					// FAMILY
-					if( $options['show_family'] ) {
-						echo $row_start . $options['family_label'] . $new_cell .  $family . $row_end;
-					}
-					
-					?>
-					
-				</tbody>
-				</table> <!-- .coach-info -->
-			
-			</div><!-- #coach-name-positon-->
-			
-		</div><!-- .coach-header -->
 		
-		<?php if( get_the_content( ) != "" ) { ?>
-			
-			<div class="coach-bio"> <!-- coach-bio-<?php echo $staff_slug; ?> "> -->
-			
-				<?php $profile_bio_heading_text = ($profile_bio_heading_text == '' ) ? __( 'Profile', 'mstw-loc-domain' ) : $profile_bio_heading_text; ?>
-				
-				<h1><?php echo $profile_bio_heading_text ?></h1>
+				<div class="coach-header coach-header-<?php echo( $staff_slug ) ?>">
+					<!-- First, figure out the coach's photo -->
+					<div id = "coach-photo">
+						<?php 
+						// Check the settings for the height and width of the photo
+						// Default is 150 x 150
+						$img_width = ( $sp_image_width == '' ) ? 150 : $sp_image_width;
+						$img_height = ( $sp_image_height == '' ) ? 150 : $sp_image_height;
+						
+						// check if the post has a Post Thumbnail assigned to it.
+						 if ( has_post_thumbnail( $coach_id ) ) { 
+							//Get the photo file;
+							$photo_file_url = wp_get_attachment_thumb_url( get_post_thumbnail_id( $coach_id ) );
+							$alt = 'Photo of ' . $name;
+						} else {
+							// Default image is tied to the staff taxonomy. 
+							// Try to load default-photo-staff-slug.jpg, If it does not exst,
+							// Then load default-photo.jpg from the plugin -->
+							$photo_file = WP_PLUGIN_DIR . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
+							if ( file_exists( $photo_file ) ) {
+								$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
+							}
+							else {
+								$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '.jpg';
+								$alt = "Photo not found.";
+							}
+						}
+						
+						echo( '<img src="' . $photo_file_url . '" alt="' . $alt . '" width="' . $img_width . '" height="' . $img_height . '" />' );
+						?>
+					</div> <!-- #coach-photo -->
+					
+					<!-- Figure out the coach name and number -->
+					<div id="coach-name-position"> 
+						<div id="coach-name">
+						<h1><?php echo $name; ?></h1> 
+						<!-- get the position ID from the URL -->
+						<h2><?php echo $position; ?> </h2>
+						</div> <!-- #coach-name -->
+					
+					
+						<table class="coach-info">
+						<tbody>
+							<?php 
+							$row_start = '<tr><td class="lf-col">';
+							$new_cell = ':</td><td class="rt-col">'; //colon is for the end of the title
+							$row_end = '</td></tr>';
+							
+							//EXPERIENCE
+							if( $options['show_experience'] ) {
+								echo $row_start . $options['experience_label'] . $new_cell .  $experience . $row_end;
+							}
+							
+							//ALMA MATER
+							if( $options['show_alma_mater'] ) {
+								echo $row_start . $options['alma_mater_label'] . $new_cell .  $alma_mater . $row_end;
+							}
+							
+							// DEGREE
+							if( $options['show_degree'] ) {
+								echo $row_start . $options['degree_label'] . $new_cell .  $degree . $row_end;
+							}
+							
+							// BIRTH DATE
+							if( $options['show_birth_date'] ) {
+								echo $row_start . $options['birth_date_label'] . $new_cell .  $birth_date . $row_end;
+							}
+							
+							// HOMETOWN
+							if( $options['show_home_town'] ) {
+								echo $row_start . $options['home_town_label'] . $new_cell .  $home_town . $row_end;
+							}
+							
+							// HIGH SCHOOL
+							if( $options['show_high_school'] ) {
+								echo $row_start . $options['high_school_label'] . $new_cell .  $high_school . $row_end;
+							}
+							
+							// FAMILY
+							if( $options['show_family'] ) {
+								echo $row_start . $options['family_label'] . $new_cell .  $family . $row_end;
+							}
+							
+							?>
+							
+						</tbody>
+						</table> <!-- .coach-info -->
+					
+					</div><!-- #coach-name-positon-->
+					
+				</div><!-- .coach-header -->
+		
+				<?php if( get_the_content( ) != "" ) { ?>
+					
+					<div class="coach-bio"> <!-- coach-bio-<?php echo $staff_slug; ?> "> -->
+					
+						<?php $profile_bio_heading_text = ($profile_bio_heading_text == '' ) ? __( 'Profile', 'mstw-loc-domain' ) : $profile_bio_heading_text; ?>
+						
+						<h1><?php echo $profile_bio_heading_text ?></h1>
 
-				<!--add the bio content (format it as desired in the post)-->
-				<?php the_content(); ?>
-			
-			</div><!-- #coach-bio -->
-			
-		<?php } // end of if ( get_the_content() ) ?>
+						<!--add the bio content (format it as desired in the post)-->
+						<?php the_content(); ?>
+					
+					</div><!-- #coach-bio -->
+					
+				<?php } // end of if ( get_the_content() ) ?>
 
-		</article><!-- #post-<?php the_ID(); ?> -->
+				</article><!-- #post-<?php the_ID(); ?> -->
 
-	<?php endwhile; // end of the main loop. ?>
+			<?php endwhile; // end of the main loop. ?>
 
-	</div><!-- #content -->
-</div><!-- #primary -->
+		</div><!-- #content -->
+	</div><!-- #primary -->
 
-<?php get_footer(); ?>
+	<?php get_footer();?>
