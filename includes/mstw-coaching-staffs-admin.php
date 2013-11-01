@@ -468,7 +468,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 	function mstw_cs_register_menu_pages( ) {
 		add_menu_page( 	__( 'MSTW Coaching Staffs', 'mstw-loc-domain' ), // Page title
 						__( 'Coaching Staffs', 'mstw-loc-domain' ),	// Menu entry (+ icon)
-						'manage_options', 		// Capability required to access
+						'edit_posts', //'manage_options', 		// Capability required to access
 						'mstw-cs-main-menu', 	// Unique menu slug
 						'mstw_cs_menu_page', 	// Callback
 						plugins_url( 'coaching-staffs/images/mstw-admin-menu-icon.png' ), // Menu Icon
@@ -478,7 +478,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		add_submenu_page( 	'mstw-cs-main-menu', 							//parent slug
 							__( 'Coaching Staffs', 'mstw-loc-domain' ), 	//page title
 							__( 'Staffs', 'mstw-loc-domain' ),				//menu title
-							'manage_options', 								//user capability required to access
+							'edit_posts', //'manage_options', 								//user capability required to access
 							'edit-tags.php?taxonomy=staffs&post_type=staff_position', 						//unique menu slug
 							'' //callback to display page
 						);					
@@ -486,7 +486,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		add_submenu_page( 'mstw-cs-main-menu', 				//parent slug
 							__( 'Coaching Staffs Display Settings', 'mstw-loc-domain' ), 	//page title
 							__( 'Display Settings', 'mstw-loc-domain' ),		//menu title
-							'manage_options', 				//user capability required to access
+							'edit_posts', //'manage_options', 				//user capability required to access
 							'mstw-cs-display-settings', 		//unique menu slug
 							'mstw_cs_settings_page' 			//callback to display page
 						);					
