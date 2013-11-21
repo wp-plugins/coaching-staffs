@@ -27,14 +27,11 @@ Code from the File_CSV_DataSource class was re-used unchanged under
 that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel. 
 -----------------------------------------------------------------------------------*/
 
-/*-----------------------------------------------------------------------------------
- * CHANGE LOG:
- * 20130801-MAO: Started development of the initial version 0.1.
- *	
- * 
- *
- *  
------------------------------------------------------------------------------------*/
+//-----------------------------------------------------------------------------------
+//
+// See http://wordpress.org/plugins/coaching-staffs/developers/ for CHANGE LOG
+//
+//-----------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
 // Set-up Action and Filter Hooks for the Settings on the admin side
