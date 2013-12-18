@@ -706,7 +706,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array(	'id' => 'show_birth_date',
 						'name' => 'mstw_cs_options[show_birth_date]',
 						'value' => $options['show_birth_date'],
-						'label' => 'Any format you choose; it is just a string to me.'
+						'label' => ''
 						);
 						
 		add_settings_field(
@@ -850,9 +850,16 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		);
 		
 		// Show/Hide Staff Table Title
+		$foo = '';
+		if ( isset( $options['show_title'] ) )
+			$foo = $options['show_title'];
+			
+		//$foo = isset( $options['show_title'] ) ? $options['show_title'] : '';
+		$foo = mstw_gs_safe_ref( $options, 'show_title' );
+		
 		$args = array(	'id' => 'show_title',
 						'name' => 'mstw_cs_options[show_title]',
-						'value' => $options['show_title'],
+						'value' => $foo, //$options['show_title'], //mstw_cs_admin_safe_ref( $options, 'show_title' ),
 						'label' => __( 'Will use "Staff Name" from Staff taxonomy as default. Hide to use another page element for the table title.', 'mstw-loc-domain')
 						);
 						
@@ -864,11 +871,14 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 			$page_section, 					//Page section to display field
 			$args							//Callback arguments
 			);
-			
+		
+		//$foo = isset( $options['table_title_color'] ) ? $options['table_title_color'] : '';
+		$foo = mstw_gs_safe_ref( $options, 'table_title_color' );
+		
 		// Staff Table[shortcode] Title Color
 		$args = array( 	'id' => 'table_title_color',
 						'name' => 'mstw_cs_options[table_title_color]',
-						'value' => $options['table_title_color'],
+						'value' => mstw_gs_safe_ref( $options, 'table_title_color' ), //$options['table_title_color'], //mstw_cs_admin_safe_ref( $options, 'table_title_color' ),
 						'label' => ''
 					 );
 					 
@@ -884,7 +894,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Show/Hide Coaches' Photos
 		$args = array(	'id' => 'show_photos',
 						'name' => 'mstw_cs_options[show_photos]',
-						'value' => $options['show_photos'],
+						'value' => $options['show_photos'], //mstw_cs_admin_safe_ref( $options, 'show_photos' ),
 						'label' => __( 'Will show coaches photos in the staff tables', 'mstw-loc-domain')
 						);
 						
@@ -901,7 +911,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Coaches' Photos Width
 		$args = array( 	'id' => 'table_photo_width',
 						'name'	=> 'mstw_cs_options[table_photo_width]',
-						'value'	=> $options['table_photo_width'],
+						'value'	=> mstw_gs_safe_ref( $options, 'table_photo_width' ), //$options['table_photo_width'], //mstw_cs_admin_safe_ref( $options, 'table_photo_width' ),
 						'label'	=> __( 'Set width in pixels for table photos, if shown. (Default: 80px)', 'mstw-loc-domain' )
 						);
 						
@@ -917,7 +927,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Coaches' Photos Height
 		$args = array( 	'id' => 'table_photo_height',
 						'name'	=> 'mstw_cs_options[table_photo_height]',
-						'value'	=> $options['table_photo_height'],
+						'value'	=> mstw_gs_safe_ref( $options, 'table_photo_height' ), //$options['table_photo_height'], //mstw_cs_admin_safe_ref( $options, 'table_photo_height' ),
 						'label'	=> __( 'Set height in pixels for table photos, if shown. (Default: 80px)', 'mstw-loc-domain' )
 						);
 						
@@ -950,7 +960,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array( 	'id' => 'table_border_width',
 						'name' => 'mstw_cs_options[table_border_width]',
 						'value' => $options['table_border_width'],
-						'label' => __( 'in pixels', 'mstw-loc-domain' ),
+						'label' => __( 'Set table border width in pixels (default:2px)', 'mstw-loc-domain' ),
 					 );
 					 
 		add_settings_field(
@@ -1255,7 +1265,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array( 	'id' => 'profile_bio_border_width',
 						'name'	=> 'mstw_cs_options[profile_bio_border_width]',
 						'value'	=> $options['profile_bio_border_width'],
-						'label'	=> 'in pixels'
+						'label'	=> __( 'Set bio border width in pixels (default:2px)', 'mstw-loc-domain' )
 						);
 						
 		add_settings_field(
@@ -1386,7 +1396,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array( 	'id' => 'gallery_tile_border_width',
 						'name' => 'mstw_cs_options[gallery_tile_border_width]',
 						'value' => $options['gallery_tile_border_width'],
-						'label' => __( 'in pixels (Default: 2px)', 'mstw-loc-domain' ),
+						'label' => __( 'Set border width in pixels. (Default: 2px)', 'mstw-loc-domain' ),
 					 );
 					 
 		add_settings_field(
@@ -1483,7 +1493,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					case 'gallery_photo_height':
 					case 'gallery_tile_border_width':
 					case 'gallery_tile_radius':
-						$output[$key] = intval( $input[$key] );
+						$output[$key] = $input[$key] == '' ? '' : intval( $input[$key] );
 						break;
 						
 					// 0-1 stuff
@@ -1508,6 +1518,11 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		} // end foreach
 		
 		return $output;
+	}
+	
+	function mstw_gs_safe_ref( $array, $ref ) {
+		$foo = isset( $array[$ref] ) ? $array[$ref] : '';
+		return $foo;
 	}
 
 	/*

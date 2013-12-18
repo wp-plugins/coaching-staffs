@@ -64,13 +64,20 @@
 						<?php 
 						// Check the settings for the height and width of the photo
 						// Default is 150 x 150
-						$img_width = ( $sp_image_width == '' ) ? 150 : $sp_image_width;
-						$img_height = ( $sp_image_height == '' ) ? 150 : $sp_image_height;
+						
+						$cs_image_width = isset( $options['gallery_photo_width'] ) ? $options['gallery_photo_width'] : '';
+						$cs_image_height = isset( $options['gallery_photo_height'] ) ? $options['gallery_photo_height'] : '';
+	
+						$img_width = ( $cs_image_width == '' ) ? 150 : $cs_image_width;
+						$img_height = ( $cs_image_height == '' ) ? 150 : $cs_image_height;
+	
+						//$img_width = ( $sp_image_width == '' ) ? 150 : $sp_image_width;
+						//$img_height = ( $sp_image_height == '' ) ? 150 : $sp_image_height;
 						
 						// check if the post has a Post Thumbnail assigned to it.
-						 if ( has_post_thumbnail( $coach_id ) ) { 
+						 if ( has_post_thumbnail( ) ) { //defaults to current post
 							//Get the photo file;
-							$photo_file_url = wp_get_attachment_thumb_url( get_post_thumbnail_id( $coach_id ) );
+							$photo_file_url = wp_get_attachment_thumb_url( get_post_thumbnail_id( ) ); //defaults to current post
 							$alt = 'Photo of ' . $name;
 						} else {
 							// Default image is tied to the staff taxonomy. 
@@ -79,6 +86,7 @@
 							$photo_file = WP_PLUGIN_DIR . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
 							if ( file_exists( $photo_file ) ) {
 								$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
+								$alt = "Default image for $staff_slug";
 							}
 							else {
 								$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '.jpg';

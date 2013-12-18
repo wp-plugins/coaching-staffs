@@ -194,7 +194,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 	
 	}
 	
-	function mstw_cs_build_css_rule( $options_array, $option_name, $css_rule, $suffix ) {
+	function mstw_cs_build_css_rule( $options_array, $option_name, $css_rule, $suffix='' ) {
 		if ( isset( $options_array[$option_name] ) and !empty( $options_array[$option_name] ) ) {
 			return $css_rule . ":" . $options_array[$option_name] . "$suffix; \n";	
 		} 

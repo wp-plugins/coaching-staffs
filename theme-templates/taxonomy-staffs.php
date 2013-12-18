@@ -41,7 +41,9 @@
 	$uri_array = explode( '/', $_SERVER['REQUEST_URI'] );	
 	$staff_slug = $uri_array[sizeof( $uri_array )-2];
 	$term = get_term_by( 'slug', $staff_slug, 'staffs' );
-	$staff_name .= $term->name;
+	$staff_name = '';
+	if( isset( $term->name ) )
+		$staff_name = $term->name;
 	
 	?>
 	
@@ -56,11 +58,12 @@
 
 	<?php /* Start the Loop */ 
 	// set the coach photo size based on admin settings, if any
-	$cs_image_width = ''; //$options['sp_image_width'];
-	$cs_image_height = ''; //$options['sp_image_height'];
 	
-	$img_width = ( $sp_image_width == '' ) ? 150 : $cs_image_width;
-	$img_height = ( $sp_image_height == '' ) ? 150 : $cs_image_height;
+	$cs_image_width = isset( $options['gallery_photo_width'] ) ? $options['gallery_photo_width'] : '';
+	$cs_image_height = isset( $options['gallery_photo_height'] ) ? $options['gallery_photo_height'] : '';
+	
+	$img_width = ( $cs_image_width == '' ) ? 150 : $cs_image_width;
+	$img_height = ( $cs_image_height == '' ) ? 150 : $cs_image_height;
 	
 	while ( have_posts() ) : the_post(); 
 		$coach_id = get_post_meta( $post->ID, 'mstw_cs_position_coach', true );
@@ -93,6 +96,7 @@
 					$photo_file = WP_PLUGIN_DIR . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
 					if ( file_exists( $photo_file ) ) {
 						$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
+						$alt = "Default image for $staff_slug";
 					}
 					else {
 						$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '.jpg';

@@ -128,6 +128,11 @@ No.
 
 == Changelog ==
 
+= 0.3 =
+* Fixed several PHP notices in mstw_coaching_staffs_admin.php, single_coach.php, and taxonomy_staffs.php. None caused reported problems but in the right circumstances they could have. I'm sure there is more work to be done to remove them all. Please let me know if you come across any.
+* Changed the display settings validation callback so empty strings remained empty strings and were not converted to zeros.
+* Updated mstw_admin_utils.php include file so that settings field instructions were displayed more cleanly in "table format"
+
 = 0.2 =
 * Added show/hide controls for all data fields to Display Settings.
 * Added numerous other Display Settings, primarily settings for the gallery, including:
