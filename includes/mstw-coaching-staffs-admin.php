@@ -855,7 +855,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 			$foo = $options['show_title'];
 			
 		//$foo = isset( $options['show_title'] ) ? $options['show_title'] : '';
-		$foo = mstw_gs_safe_ref( $options, 'show_title' );
+		$foo = mstw_cs_safe_ref( $options, 'show_title' );
 		
 		$args = array(	'id' => 'show_title',
 						'name' => 'mstw_cs_options[show_title]',
@@ -873,12 +873,12 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 			);
 		
 		//$foo = isset( $options['table_title_color'] ) ? $options['table_title_color'] : '';
-		$foo = mstw_gs_safe_ref( $options, 'table_title_color' );
+		$foo = mstw_cs_safe_ref( $options, 'table_title_color' );
 		
 		// Staff Table[shortcode] Title Color
 		$args = array( 	'id' => 'table_title_color',
 						'name' => 'mstw_cs_options[table_title_color]',
-						'value' => mstw_gs_safe_ref( $options, 'table_title_color' ), //$options['table_title_color'], //mstw_cs_admin_safe_ref( $options, 'table_title_color' ),
+						'value' => mstw_cs_safe_ref( $options, 'table_title_color' ), //$options['table_title_color'], //mstw_cs_admin_safe_ref( $options, 'table_title_color' ),
 						'label' => ''
 					 );
 					 
@@ -911,7 +911,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Coaches' Photos Width
 		$args = array( 	'id' => 'table_photo_width',
 						'name'	=> 'mstw_cs_options[table_photo_width]',
-						'value'	=> mstw_gs_safe_ref( $options, 'table_photo_width' ), //$options['table_photo_width'], //mstw_cs_admin_safe_ref( $options, 'table_photo_width' ),
+						'value'	=> mstw_cs_safe_ref( $options, 'table_photo_width' ), //$options['table_photo_width'], //mstw_cs_admin_safe_ref( $options, 'table_photo_width' ),
 						'label'	=> __( 'Set width in pixels for table photos, if shown. (Default: 80px)', 'mstw-loc-domain' )
 						);
 						
@@ -927,7 +927,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Coaches' Photos Height
 		$args = array( 	'id' => 'table_photo_height',
 						'name'	=> 'mstw_cs_options[table_photo_height]',
-						'value'	=> mstw_gs_safe_ref( $options, 'table_photo_height' ), //$options['table_photo_height'], //mstw_cs_admin_safe_ref( $options, 'table_photo_height' ),
+						'value'	=> mstw_cs_safe_ref( $options, 'table_photo_height' ), //$options['table_photo_height'], //mstw_cs_admin_safe_ref( $options, 'table_photo_height' ),
 						'label'	=> __( 'Set height in pixels for table photos, if shown. (Default: 80px)', 'mstw-loc-domain' )
 						);
 						
@@ -1520,7 +1520,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		return $output;
 	}
 	
-	function mstw_gs_safe_ref( $array, $ref ) {
+	function mstw_cs_safe_ref( $array, $ref ) {
 		$foo = isset( $array[$ref] ) ? $array[$ref] : '';
 		return $foo;
 	}
