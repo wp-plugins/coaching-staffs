@@ -170,30 +170,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		
 	}
 		
-	/*  This should move to mstw_utils
-	 *	rules_array - an array of rules for the specific css identifier
-	 *		rules_array['attrib'] = css attribute - something like "color" or "background"
-	 *		rules_array['option_name'] = element from $options that will provide the attrib's value
-	 *		rules_array['suffix'] = end of rule - something like "px" or "rem"
-	 */
-	
-	function mstw_build_css_rule( $css_id, $rules_array, $options_array ) {
-
-		$return_css = $css_id . "{ \n";
-		
-		foreach ( $rules_array as $rule ) {
-			$option_name = $rule['option_name'];
-			if ( isset( $options_array[$option_name] ) and !empty( $options_array[$option_name] ) ) {
-				$return_css .= $rule['attrib'] . ":" . $options_array[$option_name] . $rule['suffix'] . ";\n";	
-			} 
-		}
-		
-		$return_css .= "} \n";
-	
-		return $return_css;
-	
-	}
-	
+// ----------------------------------------------------------------	
+//  MSTW_CS_BUILD_CSS_RULE()
+//	rules_array - an array of rules for the specific css identifier
+//		rules_array['attrib'] = css attribute - something like "color" or "background"
+//		rules_array['option_name'] = element from $options that will provide the attrib's value
+//		rules_array['suffix'] = end of rule - something like "px" or "rem"
+//
 	function mstw_cs_build_css_rule( $options_array, $option_name, $css_rule, $suffix='' ) {
 		if ( isset( $options_array[$option_name] ) and !empty( $options_array[$option_name] ) ) {
 			return $css_rule . ":" . $options_array[$option_name] . "$suffix; \n";	
