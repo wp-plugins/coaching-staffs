@@ -62,7 +62,8 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 
 	// ----------------------------------------------------------------
 	// Load the Utility Functions if necessary
-	if ( !function_exists( 'mstw_admin_utils_loaded' ) ) {
+	//	Names are messed up 'utl' vs 'cs' ... live with it for now.
+	if ( !function_exists( 'mstw_utl_admin_utils_loaded' ) ) {
 			require_once  plugin_dir_path( __FILE__ ) . 'mstw-admin-utils.php';
 	}
 	
