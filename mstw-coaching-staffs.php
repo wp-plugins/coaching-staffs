@@ -567,7 +567,7 @@ function mstw_cs_build_staff_table( $attribs ) {
 		$even_and_odd = array('even', 'odd');
 		$row_cnt = 1; 
 		
-		// Used to determine whether or not to add links from name & photo to player profiles 
+		// Used to determine whether or not to add links from name & photo to coaches profiles 
 		$single_coach_template = get_template_directory( ) . '/single-coach.php';
 			
 		// Loop through the posts and make the rows
