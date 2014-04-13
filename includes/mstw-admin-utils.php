@@ -26,7 +26,7 @@
  *		This function is used by the require_once statement to figure
  *		out whether or not to load the utils.
  *---------------------------------------------------------------*/
-	function mstw_utl_admin_utils_loaded( ) {
+	function mstw_admin_utils_loaded( ) {
 		return( true );
 	}
 
