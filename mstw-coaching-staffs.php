@@ -68,67 +68,67 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		echo "} \n";
 		
 		echo "th.mstw-cs-table-head { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_header_text_color', 'color', '' );
-			echo mstw_cs_build_css_rule( $options, 'table_header_bkgd_color', 'background-color', '' );
-			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_header_text_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'table_header_bkgd_color', 'background-color' );
+			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color' );
 			echo mstw_cs_build_css_rule( $options, 'table_border_width', 'border-width', 'px' );
 		echo "} \n";
 		
 		echo "td.mstw-cs-odd { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_odd_text_color', 'color', '' );
-			echo mstw_cs_build_css_rule( $options, 'table_odd_bkgd_color', 'background-color', '' );
-			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_odd_text_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'table_odd_bkgd_color', 'background-color' );
+			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color' );
 			echo mstw_cs_build_css_rule( $options, 'table_border_width', 'border-width', 'px' );
 		echo "} \n";
 		
 		echo "tr.mstw-cs-odd  td.mstw-cs-odd a { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_odd_link_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_odd_link_color', 'color' );
 		echo "} \n";
 		
 		echo "td.mstw-cs-even { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_even_text_color', 'color', '' );
-			echo mstw_cs_build_css_rule( $options, 'table_even_bkgd_color', 'background-color', '' );
-			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_even_text_color', 'color' );
+			echo mstw_cs_build_css_rule( $options, 'table_even_bkgd_color', 'background-color' );
+			echo mstw_cs_build_css_rule( $options, 'table_border_color', 'border-color' );
 			echo mstw_cs_build_css_rule( $options, 'table_border_width', 'border-width', 'px' );
 		echo "} \n";
 		
 		echo "tr.mstw-cs-even td.mstw-cs-even a { \n";
-			echo mstw_cs_build_css_rule( $options, 'table_even_link_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'table_even_link_color', 'color' );
 		echo "} \n";
 		
 		
 		//Rules for Single Coach
 		echo "div.coach-header { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color' );
 		echo "} \n";
 		
 		echo "#coach-name h1 { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_name_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_name_color', 'color' );
 		echo "} \n";
 		
 		echo "#coach-name h2 { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color' );
 		echo "} \n";
 		
 		echo "div.coach-header table { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color' );
 		echo "} \n";
 		 
 		//bio_heading_color
 		echo ".coach-bio h1 { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_bio_heading_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_bio_heading_color', 'color' );
 		echo "} \n";
 		//bio_text_color
 		echo ".coach-bio p { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_bio_text_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_bio_text_color', 'color' );
 		echo "} \n";
 		//bio_bkgd_color
 		echo ".coach-bio { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_bio_bkgd_color', 'background-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_bio_bkgd_color', 'background-color' );
 		//echo "} \n";
 		//bio_border_color
 		//echo ".coach-bio { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_bio_border_color', 'border-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_bio_border_color', 'border-color' );
 		//echo "} \n";
 		//bio_border_width
 		//echo ".coach-bio { \n";
@@ -137,20 +137,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		
 		// Rules for Coaches Galleries
 		echo ".coach-tile { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color', '' );
-			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_bkgd_color', 'background-color' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_text_color', 'color' );
 			//echo mstw_cs_build_css_rule( $options, 'gallery_tile_radius', 'border-radius', 'px' );
 			//echo mstw_cs_build_css_rule( $options, 'gallery_tile_radius', '-moz-border-radius', 'px' );
 			echo 'border-radius: ' . $options['gallery_tile_radius'] . "px; \n";
 			echo '-moz-border-radius: ' . $options['gallery_tile_radius'] . "px; \n";
-			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_color', 'border-color', '' );
+			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_color', 'border-color' );
 			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_width', 'border-width', 'px' );
 			//echo 'border-width: ' . $options['gallery_tile_border_width'] . "px; \n";
 			echo mstw_cs_build_css_rule( $options, 'gallery_tile_border_width', 'border-width', 'px' );
 		echo "} \n";
 		
 		echo "h1.staff-head-title { \n";
-			echo mstw_cs_build_css_rule( $options, 'gallery_title_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'gallery_title_color', 'color' );
 		echo "} \n";
 		
 		echo ".coach-photo img, #coach-photo img { \n";
@@ -159,24 +159,25 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		echo "} \n";
 		
 		echo ".coach-name-position a { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_name_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_name_color', 'color' );
 		echo "} \n";
 		
 		echo ".coach-name-position h2 { \n";
-			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color', '' );
+			echo mstw_cs_build_css_rule( $options, 'profile_header_position_color', 'color' );
 		echo "} \n";
 		
 		echo '</style>';
 		
 	}
 		
-// ----------------------------------------------------------------	
-//  MSTW_CS_BUILD_CSS_RULE()
-//	rules_array - an array of rules for the specific css identifier
-//		rules_array['attrib'] = css attribute - something like "color" or "background"
-//		rules_array['option_name'] = element from $options that will provide the attrib's value
-//		rules_array['suffix'] = end of rule - something like "px" or "rem"
-//
+	/*  This should move to mstw_utils
+	 *	rules_array - an array of rules for the specific css identifier
+	 *		rules_array['attrib'] = css attribute - something like "color" or "background"
+	 *		rules_array['option_name'] = element from $options that will provide the attrib's value
+	 *		rules_array['suffix'] = end of rule - something like "px" or "rem"
+	 */
+	
+	
 	function mstw_cs_build_css_rule( $options_array, $option_name, $css_rule, $suffix='' ) {
 		if ( isset( $options_array[$option_name] ) and !empty( $options_array[$option_name] ) ) {
 			return $css_rule . ":" . $options_array[$option_name] . "$suffix; \n";	
@@ -202,10 +203,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 	function mstw_cs_get_posts( $query ) {
 		// Need to check the need for this first conditional ... someday
-		//if ( is_category( ) && $query->is_main_query() )
-		//	$query->set( 'post_type', array( 'post', 'coach' ) ); 
-  
-		if ( is_tax( 'staffs' ) && $query->is_main_query() ) {
+
+		if ( !is_admin() && is_tax( 'staffs' ) && $query->is_main_query() ) {
 			// We are on the coach gallery page ...
 			// So set the sort order based on the admin settings
 			//$options = get_option( 'mstw_cs_options' );
@@ -250,10 +249,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 				  );
 				  
 		$args = array( 
-			'hierarchical' 			=> false, 
-			'labels' 				=> $labels, 
+			'labels' 				=> $labels,
+			'public'				=> true,
 			'show_ui'				=> true,
+			'show_in_nav_menus'		=> true, //\\
+			'show_tagcloud'			=> false,
 			'show_admin_column'		=> true,
+			'hierarchical' 			=> false, 
 			'query_var' 			=> true, 
 			'rewrite' 				=> true 
 			);
@@ -386,7 +388,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		// Set up the arguments for the staff_position post type. 
 		$staff_args = array(
 			'public'	=> true,
-			'query_var'	=> 'staff_position',
+			'query_var'	=> true, //'staff_position',
 			'rewrite' 	=> array(
 								'slug'       => 'staff_positions',
 								'with_front' => false,
@@ -567,9 +569,6 @@ function mstw_cs_build_staff_table( $attribs ) {
 		$even_and_odd = array('even', 'odd');
 		$row_cnt = 1; 
 		
-		// Used to determine whether or not to add links from name & photo to coaches profiles 
-		$single_coach_template = get_template_directory( ) . '/single-coach.php';
-			
 		// Loop through the posts and make the rows
 		foreach( $posts as $post ){
 			// set up some housekeeping to make styling in the loop easier
@@ -586,6 +585,10 @@ function mstw_cs_build_staff_table( $attribs ) {
 			// GET the corresponding coach post ID; this is used to plug the coaches data
 			$coach_id = get_post_meta( $post->ID, 'mstw_cs_position_coach', true );
 
+			// Check to see if the single_coach.php template exists in 
+			// the active theme directory, if so add the links from the table
+			$single_coach_template = get_template_directory( ) . '/single-coach.php';
+			
 			if ( $show_photos ) {
 				$row_string .= $row_td;
 				
@@ -595,7 +598,7 @@ function mstw_cs_build_staff_table( $attribs ) {
 						$row_string .= get_the_post_thumbnail( $coach_id, array($table_photo_width, $table_photo_height) ) .  '</a></td>'; 
 					}
 					else {  //No profile to link to
-						$row_string .= get_the_post_thumbnail( $coach_id, array($table_photo_width, $table_photo_height) ) .  '</td>';
+						$row_string .= get_the_post_thumbnail( $coach_id, array($table_photo_width, $table_photo_height) ) .  '</a></td>';
 					}	
 				}
 				else {

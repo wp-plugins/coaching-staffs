@@ -49,6 +49,8 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 //
 // --------------------------------------------------------------------------------------
 
+	add_filter('months_dropdown_results', '__return_empty_array');
+
 	// ----------------------------------------------------------------
 	// Add styles and scripts for the color picker.
 	
@@ -102,8 +104,47 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 	// ----------------------------------------------------------------
 	// Add a filter the All Staff Positions screen based on the Staffs Taxonomy
 	// This new code is from http://wordpress.stackexchange.com/questions/578/adding-a-taxonomy-filter-to-admin-list-for-a-custom-post-type
+	/*
 	add_action( 'restrict_manage_posts', 'mstw_cs_restrict_manage_posts' );
 	add_filter( 'parse_query','mstw_cs_convert_restrict' );
+	*/
+	add_action( 'restrict_manage_posts', 'mstw_cs_restrict_positions_by_staff' );
+	
+	function mstw_cs_restrict_positions_by_staff( ) {
+	global $typenow;
+
+	if( $typenow == 'staff_position' ) {
+		
+		$taxonomy_slugs = array( 'staffs' );
+		
+		foreach ( $taxonomy_slugs as $tax_slug ) {
+			//retrieve the taxonomy object for the tax_slug
+			$tax_obj = get_taxonomy( $tax_slug );
+			$tax_name = $tax_obj->labels->name;
+			
+			$terms = get_terms( $tax_slug );
+		
+			//output the html for the drop down menu
+			echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
+            echo "<option value=''>". __( 'Show All Staffs', 'mstw-schedules-scoreboards') . "</option>";
+			
+			//output each select option line
+            foreach ($terms as $term) {
+                //check against the last $_GET to show the current selection
+				if ( array_key_exists( $tax_slug, $_GET ) ) {
+					$selected = ( $_GET[$tax_slug] == $term->slug )? ' selected="selected"' : '';
+				}
+				else {
+					$selected = '';
+				}
+                echo '<option value=' . $term->slug . $selected . '>' . $term->name . ' (' . $term->count . ')</option>';
+            }
+            echo "</select>"; 
+		}	
+	}
+} //End: mstw_ss_restrict_games_by_scoreboard( )
+	
+	
 	
 	function mstw_cs_restrict_manage_posts( ) {
 		global $typenow;
