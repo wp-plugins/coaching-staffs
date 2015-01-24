@@ -5,7 +5,7 @@
  */
 
 /*-----------------------------------------------------------------------------------
-Copyright 2012-13  Mark O'Donnell  (email : mark@shoalsummitsolutions.com)
+Copyright 2012-15  Mark O'Donnell  (email : mark@shoalsummitsolutions.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 //register_uninstall_hook(__FILE__, 'mstw_cs_delete_plugin_options');
 
 // --------------------------------------------------------------------------------------
-// Callback for: register_uninstall_hook(__FILE__, 'mstw_tr_delete_plugin_options')
+// Callback for: register_uninstall_hook(__FILE__, 'mstw_cs_delete_plugin_options')
 // --------------------------------------------------------------------------------------
 // It runs when the user deactivates AND DELETES the plugin. 
 // It deletes the plugin options DB entry, which is an array storing all the plugin options
@@ -126,7 +126,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		
 			//output the html for the drop down menu
 			echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
-            echo "<option value=''>". __( 'Show All Staffs', 'mstw-schedules-scoreboards') . "</option>";
+            echo "<option value=''>". __( 'Show All Staffs', 'mstw-loc-domain') . "</option>";
 			
 			//output each select option line
             foreach ($terms as $term) {
@@ -935,7 +935,8 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Show/Hide Coaches' Photos
 		$args = array(	'id' => 'show_photos',
 						'name' => 'mstw_cs_options[show_photos]',
-						'value' => $options['show_photos'], //mstw_cs_admin_safe_ref( $options, 'show_photos' ),
+						//'value' => $options['show_photos'], //mstw_cs_admin_safe_ref( $options, 'show_photos' ),
+						'value' => mstw_cs_safe_ref( $options, 'show_photos' ),
 						'label' => __( 'Will show coaches photos in the staff tables', 'mstw-loc-domain')
 						);
 						
@@ -1470,7 +1471,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Create our array for storing the validated options
 		$output = array();
 		// Pull the previous (good) options
-		$options = get_option( 'mstw_tr_options' );
+		$options = get_option( 'mstw_cs_options' );
 		
 		if ( array_key_exists( 'reset', $input ) ) {
 			if ( $input['reset'] ) {
@@ -1518,8 +1519,8 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 							// there's an error. Reset to the last stored value
 							$output[$key] = $options[$key];
 							// add error message
-							add_settings_error( 'mstw_tr_' . $key,
-												'mstw_tr_hex_color_error',
+							add_settings_error( 'mstw_cs_' . $key,
+												'mstw_cs_hex_color_error',
 												'Invalid hex color entered!',
 												'error');
 						}
@@ -1540,12 +1541,8 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					// 0-1 stuff
 					case 'show_title':
 					case 'show_photos':
-						if ( $input[$key] == 1 ) {
-							$output[$key] = 1;
-						}
-						else {
-							$input[$key] = 0;
-						}
+						$output[$key] = ( isset( $input[$key] ) and  $input[$key] == 1 ) ? 1 : 0;
+						//mstw_log_msg( 'saving ' . $key . '... input= ' . $input[$key] . ' output= ' . $output[$key] );
 						break;
 						
 					// Sanitize all other settings as text
@@ -1566,13 +1563,85 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		return $foo;
 	}
 
+	
+//----------------------------------------------------------------
+// Removing default messages and taking control of all admin messages for CPTs
+//
+	add_filter('post_updated_messages', 'mstw_cs_updated_messages');
+
+	function mstw_cs_updated_messages( $messages ) {
+		
+		$messages['coach'] = array( );
+		$messages['staff_position'] = array( );
+
+		$messages['coach'] = array(
+			0 => '', // Unused. Messages start at index 1.
+			1 => __( 'Coach updated.', 'mstw-loc-domain' ),
+			2 => __( 'Custom field updated.', 'mstw-loc-domain'),
+			3 => __( 'Custom field deleted.', 'mstw-loc-domain' ),
+			4 => __( 'Coach updated.', 'mstw-loc-domain' ),
+			5 => __( 'Coach restored to revision', 'mstw-loc-domain' ),
+			6 => __( 'Coach published.', 'mstw-loc-domain' ),
+			7 => __( 'Coach saved.', 'mstw-loc-domain' ),
+			8 => __( 'Coach submitted.', 'mstw-loc-domain' ),
+			9 => __( 'Coach scheduled for publication.', 'mstw-loc-domain' ),
+			10 => __( 'Coach draft updated.', 'mstw-loc-domain' ),
+		);
+		
+		$messages['staff_position'] = array(
+			0 => '', // Unused. Messages start at index 1.
+			1 => __( 'Position updated.', 'mstw-loc-domain' ),
+			2 => __( 'Custom field updated.', 'mstw-loc-domain'),
+			3 => __( 'Custom field deleted.', 'mstw-loc-domain' ),
+			4 => __( 'Position updated.', 'mstw-loc-domain' ),
+			5 => __( 'Position restored to revision', 'mstw-loc-domain' ),
+			6 => __( 'Position published.', 'mstw-loc-domain' ),
+			7 => __( 'Position saved.', 'mstw-loc-domain' ),
+			8 => __( 'Position submitted.', 'mstw-loc-domain' ),
+			9 => __( 'Position scheduled for publication.', 'mstw-loc-domain' ),
+			10 => __( 'Position draft updated.', 'mstw-loc-domain' ),
+		);
+		
+		return $messages;
+		
+	} //End: mstw_cs_updated_messages
+
+//----------------------------------------------------------------
+// Removing default messages and taking control of all admin messages for CPTs
+//
+	add_filter( 'bulk_post_updated_messages', 'mstw_cs_bulk_post_updated_messages', 10, 2 );
+
+	function mstw_cs_bulk_post_updated_messages( $messages, $bulk_counts ) {	
+		$messages['coach'] = array( );
+		$messages['staff_position'] = array( );
+		
+		$messages['coach'] = array(
+			'updated'   => _n( '%s coach updated.', '%s coaches updated.', $bulk_counts['updated'], 'mstw-loc-domain' ),
+			'locked'    => _n( '%s coach not updated, somebody is editing it.', '%s coaches not updated, somebody is editing them.', $bulk_counts['locked'], 'mstw-loc-domain' ),
+			'deleted'   => _n( '%s coach permanently deleted.', '%s coaches permanently deleted.', $bulk_counts['deleted'], 'mstw-loc-domain' ),
+			'trashed'   => _n( '%s coach moved to the Trash.', '%s coaches moved to the Trash.', $bulk_counts['trashed'], 'mstw-loc-domain' ),
+			'untrashed' => _n( '%s coach restored from the Trash.', '%s coaches restored from the Trash.', $bulk_counts['untrashed'], 'mstw-loc-domain' ),
+		);
+		
+		$messages['staff_position'] = array(
+			'updated'   => _n( '%s position updated.', '%s positions updated.', $bulk_counts['updated'], 'mstw-loc-domain' ),
+			'locked'    => _n( '%s position not updated, somebody is editing it.', '%s positions not updated, somebody is editing them.', $bulk_counts['locked'], 'mstw-loc-domain' ),
+			'deleted'   => _n( '%s position permanently deleted.', '%s positions permanently deleted.', $bulk_counts['deleted'], 'mstw-loc-domain' ),
+			'trashed'   => _n( '%s position moved to the Trash.', '%s positions moved to the Trash.', $bulk_counts['trashed'], 'mstw-loc-domain' ),
+			'untrashed' => _n( '%s position restored from the Trash.', '%s positions restored from the Trash.', $bulk_counts['untrashed'], 'mstw-loc-domain' ),
+		);
+				
+		return $messages;
+			
+	} //End: mstw_cs_bulk_post_updated_messages()
+
 	/*
 	//------------------------------------------------------------------
 	// Add admin_notices action - need to look at this more someday
 	
-	add_action( 'admin_notices', 'mstw_tr_admin_notices' );
+	add_action( 'admin_notices', 'mstw_cs_admin_notices' );
 	
-	function mstw_tr_admin_notices() {
+	function mstw_cs_admin_notices() {
 		settings_errors( );
 	}
 	*/

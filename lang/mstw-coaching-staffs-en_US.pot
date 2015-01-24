@@ -1,0 +1,812 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: MSTW Coaching Staffs\n"
+"POT-Creation-Date: 2015-01-23 20:30-0800\n"
+"PO-Revision-Date: 2015-01-23 20:31-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ../includes\n"
+"X-Poedit-SearchPath-2: ../theme-templates\n"
+
+#: ../includes/mstw-admin-utils.php:138
+#: ../includes/mstw-utility-functions.php:543
+msgid "Show"
+msgstr ""
+
+#: ../includes/mstw-admin-utils.php:139
+#: ../includes/mstw-utility-functions.php:544
+msgid "Hide"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:129
+msgid "Show All Staffs"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:163
+msgid "Show All "
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:202
+#: ../includes/mstw-coaching-staffs-admin.php:462
+msgid "Coach"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:209
+msgid "Staff Position"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:234
+#: ../includes/mstw-coaching-staffs-admin.php:385
+#: ../includes/mstw-cs-utility-functions.php:49
+msgid "Experience"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:239
+#: ../includes/mstw-coaching-staffs-admin.php:384
+#: ../includes/mstw-cs-utility-functions.php:51
+msgid "Alma Mater"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:244
+#: ../includes/mstw-coaching-staffs-admin.php:386
+#: ../includes/mstw-cs-utility-functions.php:53
+msgid "Degree"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:249
+#: ../includes/mstw-coaching-staffs-admin.php:387
+msgid "Birth Date"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:254
+#: ../includes/mstw-coaching-staffs-admin.php:388
+msgid "Home Town"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:259
+#: ../includes/mstw-coaching-staffs-admin.php:389
+#: ../includes/mstw-cs-utility-functions.php:59
+msgid "High School"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:264
+#: ../includes/mstw-coaching-staffs-admin.php:390
+#: ../includes/mstw-cs-utility-functions.php:61
+msgid "Family"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:291
+msgid "Select coach"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:323
+msgid "Display Order:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:382
+#: ../includes/mstw-cs-utility-functions.php:46
+msgid "Name"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:383
+#: ../includes/mstw-cs-utility-functions.php:45
+msgid "Photo"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:459
+#: ../includes/mstw-cs-utility-functions.php:47
+msgid "Position"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:460
+msgid "Staff"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:507
+msgid "MSTW Coaching Staffs"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:508
+#: ../includes/mstw-coaching-staffs-admin.php:517
+msgid "Coaching Staffs"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:518
+msgid "Staffs"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:525
+msgid "Coaching Staffs Display Settings"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:526
+msgid "Display Settings"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:544
+msgid "Save Changes"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:546
+msgid "Reset Default Values"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:547
+msgid "WARNING! Reset Default Values will do so without further warning!"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:594
+msgid "Data Field Settings"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:608
+msgid "Name Label:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:625
+msgid "Show Position:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:643
+msgid "Position Label:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:659
+msgid "Show Experience:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:675
+msgid "Experience Label:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:691
+msgid "Show Alma Mater:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:707
+msgid "Alma Mater Label:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:723
+msgid "Show Degree:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:739
+msgid "Degree Label:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:755
+msgid "Show Birth Date:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:771
+msgid "Birth Date Label:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:787
+msgid "Show Hometown:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:803
+msgid "Hometown Label:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:819
+msgid "Show High School:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:835
+msgid "High School Label:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:851
+msgid "Show Family:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:867
+msgid "Family Label:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:888
+msgid "Staff Table/[shortcode] Settings"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:904
+#: ../includes/mstw-coaching-staffs-admin.php:1342
+msgid ""
+"Will use \"Staff Name\" from Staff taxonomy as default. Hide to use another "
+"page element for the table title."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:909
+msgid "Show Staff Table Titles:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:928
+msgid "Table Title Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:940
+msgid "Will show coaches photos in the staff tables"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:945
+msgid "Show Photos:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:957
+msgid "Set width in pixels for table photos, if shown. (Default: 80px)"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:962
+msgid "Table Photo Width:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:973
+msgid "Set height in pixels for table photos, if shown. (Default: 80px)"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:978
+msgid "Table Photo Height:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:994
+msgid "Table Border Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1005
+msgid "Set table border width in pixels (default:2px)"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1010
+msgid "Table Border Width:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1026
+msgid "Table Header Background Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1042
+msgid "Table Header Text Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1058
+msgid "Table Even Row Text Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1074
+msgid "Table Even Row Background Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1090
+msgid "Table Even Row Link Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1106
+msgid "Table Odd Row Text Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1122
+msgid "Table Odd Row Background Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1138
+msgid "Table Odd Row Link Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1157
+msgid "Coach Profile Settings"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1166
+msgid "The text for the coach's profile bio heading."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1171
+msgid "Profile Heading:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1187
+msgid "Header Background Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1203
+msgid "Header Text Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1219
+msgid "Name Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1235
+msgid "Position Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1251
+msgid "Bio Section Heading Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1267
+msgid "Bio Section Text Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1283
+msgid "Bio Section Background Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1299
+msgid "Bio Section Border Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1310
+msgid "Set bio border width in pixels (default:2px)"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1315
+msgid "Bio Section Border Width:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1333
+msgid "Coaches Gallery Settings"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1347
+msgid "Show Gallery Title:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1363
+msgid "Gallery Title Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1374
+msgid "Default is rounded."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1375
+msgid "Rounded"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1376
+msgid "Square"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1382
+msgid "Gallery Tile Corner Style:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1393
+msgid "Set width in pixels for gallery photos, if shown. (Default: 150px)"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1398
+msgid "Gallery Photo Width:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1409
+msgid "Set height in pixels for gallery photos, if shown. (Default: 150px)"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1414
+msgid "Gallery Photo Height:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1430
+msgid "Gallery Tile Border Color:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1441
+msgid "Set border width in pixels. (Default: 2px)"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1446
+msgid "Gallery Tile Border Width:"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1455
+msgid "Enter the default settings for Coaches Gallery pages."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1459
+msgid "Enter the default settings for Single Coach Profile pages."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1463
+msgid ""
+"Enter the default settings for Staff Table/[shortcode]. These can be "
+"overridden by [shortcode] arguments."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1467
+msgid ""
+"Enter the visibility and labels for the data fiels. The name field must "
+"always be displayed, but it can be re-labeled. Note that these settings can "
+"be overridden by [shortcode] arguments."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1579
+#: ../includes/mstw-coaching-staffs-admin.php:1582
+msgid "Coach updated."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1580
+#: ../includes/mstw-coaching-staffs-admin.php:1594
+msgid "Custom field updated."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1581
+#: ../includes/mstw-coaching-staffs-admin.php:1595
+msgid "Custom field deleted."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1583
+msgid "Coach restored to revision"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1584
+msgid "Coach published."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1585
+msgid "Coach saved."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1586
+msgid "Coach submitted."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1587
+msgid "Coach scheduled for publication."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1588
+msgid "Coach draft updated."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1593
+#: ../includes/mstw-coaching-staffs-admin.php:1596
+msgid "Position updated."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1597
+msgid "Position restored to revision"
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1598
+msgid "Position published."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1599
+msgid "Position saved."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1600
+msgid "Position submitted."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1601
+msgid "Position scheduled for publication."
+msgstr ""
+
+#: ../includes/mstw-coaching-staffs-admin.php:1602
+msgid "Position draft updated."
+msgstr ""
+
+#: ../includes/mstw-cs-utility-functions.php:55
+msgid "Born"
+msgstr ""
+
+#: ../includes/mstw-cs-utility-functions.php:57
+msgid "Hometown"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:148
+msgid "Mon"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:149
+msgid "Tue"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:150
+msgid "Wed"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:151
+msgid "Thr"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:152
+msgid "Fri"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:153
+msgid "Sat"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:154
+msgid "Sun"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:157
+msgid "Monday"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:158
+msgid "Tuesday"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:159
+msgid "Wednesday"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:160
+msgid "Thursday"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:161
+msgid "Friday"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:162
+msgid "Saturday"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:163
+msgid "Sunday"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:166
+msgid "January"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:167
+msgid "February"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:168
+msgid "March"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:169
+msgid "April"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:170
+#: ../includes/mstw-utility-functions.php:184
+msgid "May"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:171
+msgid "June"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:172
+msgid "July"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:173
+msgid "August"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:174
+msgid "September"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:175
+msgid "October"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:176
+msgid "November"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:177
+msgid "December"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:180
+msgid "Jan"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:181
+msgid "Feb"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:182
+msgid "Mar"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:183
+msgid "Apr"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:185
+msgid "Jun"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:186
+msgid "Jul"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:187
+msgid "Aug"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:188
+msgid "Sep"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:189
+msgid "Oct"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:190
+msgid "Nov"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:191
+msgid "Dec"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:317
+msgid "Default Field"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:318
+msgid "Default Label"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:550
+#: ../includes/mstw-utility-functions.php:565
+#: ../includes/mstw-utility-functions.php:575
+#: ../includes/mstw-utility-functions.php:595
+#: ../includes/mstw-utility-functions.php:603
+#: ../includes/mstw-utility-functions.php:614
+msgid "Custom"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:551
+msgid "Tuesday, 07 April 01:15 pm"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:552
+msgid "Tuesday, 7 April 01:15 pm"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:553
+msgid "Tuesday, 07 April 1:15 pm"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:554
+msgid "Tuesday, 7 April 1:15 pm"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:555
+#: ../includes/mstw-utility-functions.php:556
+msgid "Tuesday, 7 April 13:15"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:557
+msgid "07 April 13:15"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:558
+msgid "7 April 13:15"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:559
+msgid "07 April 01:15 pm"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:560
+msgid "7 April 01:15 pm"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:569
+msgid "Formats for 7 April 2013 13:15."
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:580
+msgid "07 Apr 2013"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:581
+msgid "7 Apr 2013"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:582
+msgid "Tues, 07 Apr 2013"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:583
+msgid "Tues, 7 Apr 13"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:584
+msgid "Tuesday, 7 Apr"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:585
+msgid "Tuesday, 07 April 2013"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:586
+msgid "Tuesday, 7 April 2013"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:587
+msgid "Tues, 07 Apr"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:588
+msgid "Tues, 7 Apr"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:589
+msgid "07 Apr"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:590
+msgid "7 Apr"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:598
+msgid "Formats for 7 Apr 2013. Default: 2013-04-07"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:604
+msgid "08:00 (24hr)"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:605
+msgid "8:00 (24hr)"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:606
+msgid "08:00 am"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:607
+msgid "08:00 AM"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:608
+msgid "8:00 am"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:609
+msgid "8:00 AM"
+msgstr ""
+
+#: ../includes/mstw-utility-functions.php:617
+msgid "Formats for eight in the morning. Default: 08:00"
+msgstr ""
+
+#: ../theme-templates/single-coach.php:35
+msgid "Post navigation"
+msgstr ""
+
+#: ../theme-templates/single-coach.php:40
+msgid "Return to roster"
+msgstr ""
+
+#: ../theme-templates/single-coach.php:100
+msgid "Default image for"
+msgstr ""
+
+#: ../theme-templates/single-coach.php:104
+msgid "Photo not found."
+msgstr ""
+
+#: ../theme-templates/single-coach.php:176
+msgid "Profile"
+msgstr ""

@@ -4,7 +4,7 @@
  * 	Utility functions for Coaching Staffs Plugin Admin
  *
  *	Coaching Staffs (Wordpress Plugin)
- *	Copyright (C) 2013 Mark O'Donnell
+ *	Copyright (C) 2013-15 Mark O'Donnell
  *	Contact me at http://shoalsummitsolutions.com
  *
  *	This program is free software: you can redistribute it and/or modify

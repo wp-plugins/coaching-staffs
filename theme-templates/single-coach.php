@@ -2,15 +2,26 @@
 /**
  * MSTW Coaching Staffs Template for displaying single coach profiles.
  *
- * NOTE: This is the "theme's framing". The bulk of the work is done in 
- * content-single-coach.php. This template has been tested in the WordPress 
- * Twenty Eleven Theme. Plugin users will probably have to modify this template 
- * to fit their individual themes. 
+ * 	NOTE: This is the "theme's framing". This template has been tested in the WordPress 
+ * 	Twenty Eleven Theme. Plugin users will probably have to modify this template 
+ * 	to fit their individual themes. 
  *
- * @package Twenty_Eleven
- * @subpackage Coaching_Staffs
- * @since Coaching Staffs 0.1
- */
+ *	MSTW Wordpress Plugins (http://shoalsummitsolutions.com)
+ *	Copyright 2015 Mark O'Donnell (mark@shoalsummitsolutions.com)
+ *
+ *	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
+
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program. If not, see <http://www.gnu.org/licenses/>..
+ *-------------------------------------------------------------------------*/
  ?>
 
 	<?php get_header(); ?>
@@ -21,12 +32,12 @@
 			<?php while ( have_posts() ) : the_post(); ?>
 
 				<nav id="nav-single">
-					<h3 class="assistive-text"><?php _e( 'Post navigation', 'twentyeleven' ); ?></h3>
+					<h3 class="assistive-text"><?php _e( 'Post navigation', 'mstw-loc-domain' ); ?></h3>
 					<span class="nav-previous">
 						<?php $back =$_SERVER['HTTP_REFERER'];
 						if( isset( $back ) && $back != '' ) { 
 							echo '<a href="' . $back . '">';?>
-							<span class="meta-nav">&larr;</span>Return to roster</a>
+							<span class="meta-nav">&larr;</span><?php _e( 'Return to roster', 'mstw-loc-domain' ); ?></a>
 						<?php
 						}?>
 					</span> <!-- .nav-previous -->
@@ -86,11 +97,11 @@
 							$photo_file = WP_PLUGIN_DIR . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
 							if ( file_exists( $photo_file ) ) {
 								$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
-								$alt = "Default image for $staff_slug";
+								$alt = __( 'Default image for', 'mstw-loc-domain') . ' ' . $staff_slug;
 							}
 							else {
 								$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '.jpg';
-								$alt = "Photo not found.";
+								$alt = __( 'Photo not found.', 'mstw-loc-domain' );
 							}
 						}
 						

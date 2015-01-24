@@ -3,38 +3,29 @@
 Plugin Name: Coaching Staffs
 Plugin URI: http://wordpress.org/extend/plugins/coaching-staffs/
 Description: The Coaching Staffs Plugin defines a custom type - Coach - for use in the MSTW framework. It generates a coaching staff table, a coaching staff gallery, and a single coach profile.
-Version: 0.2
+Version: 0.3
 Author: Mark O'Donnell
 Author URI: http://shoalsummitsolutions.com
 */
 
 /*
-Coaching Staffs (Wordpress Plugin)
-Copyright (C) 2013 Mark O'Donnell
-Contact me at http://shoalsummitsolutions.com
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
-
-/* ------------------------------------------------------------------------
- * CHANGE LOG:
- * 20130801-MAO: Started development of the initial version 0.1.
- *	
- * 
+ *	Coaching Staffs (Wordpress Plugin)
+ *	Copyright (C) 2013-15 Mark O'Donnell
+ *	Contact me at mark@shoalsummitsolutions.com
  *
- *  
- * ------------------------------------------------------------------------*/
+ *	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 // ----------------------------------------------------------------
 // If an admin, load the admin functions (once)
@@ -43,14 +34,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		require_once ( dirname( __FILE__ ) . '/includes/mstw-coaching-staffs-admin.php' );
     }
 
-
 // ----------------------------------------------------------------
 // Load the Team Rosters utility functions (once)
 
-	if ( !function_exists( 'mstw_cs_get_defaults' ) ) {
-		require_once ( dirname( __FILE__ ) . '/includes/mstw-cs-utility-functions.php' );
-    }
-
+	require_once ( dirname( __FILE__ ) . '/includes/mstw-cs-utility-functions.php' );
 
 // ----------------------------------------------------------------
 // Add the CSS code to the header
@@ -267,6 +254,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 // ----------------------------------------------------------------
 // Deactivate, request upgrade, and exit if WP version is not right
+//
 	add_action( 'admin_init', 'mstw_cs_requires_wp_ver' );
 
 	function mstw_cs_requires_wp_ver() {
@@ -285,13 +273,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 // ----------------------------------------------------------------
 // Load the CSS
+//
 	add_action( 'wp_enqueue_scripts', 'mstw_cs_enqueue_styles' );
 
 	function mstw_cs_enqueue_styles () {
 		
 		// Find the full path to the css file 
-		$mstw_tr_style_url = plugins_url( '/css/mstw-cs-styles.css', __FILE__ );
-		//$mstw_tr_style_file = WP_PLUGIN_DIR . '/mstw-team-rosters/css/mstw-tr-style.css';
 		$mstw_cs_style_file = dirname( __FILE__ ) . '/css/mstw-cs-styles.css';
 		
 		wp_register_style( 'mstw-cs-styles', plugins_url( '/css/mstw-cs-styles.css', __FILE__ ) );
@@ -435,16 +422,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 // --------------------------------------------------------------------------------------
 // Add the shortcode handler, which will create the a Coaching Staff table on the user side.
 // 	Handles the shortcode parameters, if there were any, 
-// 	then calls mstw_tr_build_roster() to create the output
+// 	then calls mstw_cs_build_staff_table() to create the output
 // --------------------------------------------------------------------------------------
 add_shortcode( 'mstw-cs-table', 'mstw_cs_shortcode_handler' );
 
-
 function mstw_cs_shortcode_handler( $atts ){
-
 	// get the options set in the admin screen
 	$options = get_option( 'mstw_cs_options' );
-	//$output = '<pre>OPTIONS:' . print_r( $options, true ) . '</pre>';
+	//mstw_log_msg( 'in mstw_cs_shortcode_handler ...' );
+	//mstw_log_msg( '$options:' );
+	//mstw_log_msg( $options );
 	
 	// and merge them with the defaults
 	$args = wp_parse_args( $options, mstw_cs_get_defaults( ) );
@@ -609,7 +596,7 @@ function mstw_cs_build_staff_table( $attribs ) {
 					else {
 						$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo.jpg';	
 					}
-					$row_string .=  '<img width="' . $table_photo_width . '" height="' . $table_photo_height . '" src="' . $photo_file_url . '" class="attachment-64x64 wp-post-image" alt="No photo available"/></td>';
+					$row_string .=  '<img width="' . $table_photo_width . '" height="' . $table_photo_height . '" src="' . $photo_file_url . '" class="attachment-64x64 wp-post-image" alt="' . __( 'No photo available.', 'mstw-loc-domain' ) . '"/></td>';
 				}
 			}
 			
@@ -634,7 +621,6 @@ function mstw_cs_build_staff_table( $attribs ) {
 			
 			// Add the coach's experience
 			if ( $show_experience ) {
-				//$row_string .= $row_td . get_post_meta( $post->ID, '_mstw_tr_height', true ) . '</td>';
 				$row_string .= $row_td . get_post_meta( $coach_id, 'mstw_cs_experience', true ) . '</td>';
 			}
 			
