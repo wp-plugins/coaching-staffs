@@ -3,38 +3,29 @@
 Plugin Name: Coaching Staffs
 Plugin URI: http://wordpress.org/extend/plugins/coaching-staffs/
 Description: The Coaching Staffs Plugin defines a custom type - Coach - for use in the MSTW framework. It generates a coaching staff table, a coaching staff gallery, and a single coach profile.
-Version: 0.1
+Version: 0.3
 Author: Mark O'Donnell
 Author URI: http://shoalsummitsolutions.com
 */
 
 /*
-Coaching Staffs (Wordpress Plugin)
-Copyright (C) 2013 Mark O'Donnell
-Contact me at http://shoalsummitsolutions.com
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
-
-/* ------------------------------------------------------------------------
- * CHANGE LOG:
- * 20130801-MAO: Started development of the initial version 0.1.
- *	
- * 
+ *	Coaching Staffs (Wordpress Plugin)
+ *	Copyright (C) 2013-15 Mark O'Donnell
+ *	Contact me at mark@shoalsummitsolutions.com
  *
- *  
- * ------------------------------------------------------------------------*/
+ *	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 // ----------------------------------------------------------------
 // If an admin, load the admin functions (once)
@@ -43,14 +34,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		require_once ( dirname( __FILE__ ) . '/includes/mstw-coaching-staffs-admin.php' );
     }
 
-
 // ----------------------------------------------------------------
 // Load the Team Rosters utility functions (once)
 
-	if ( !function_exists( 'mstw_cs_get_defaults' ) ) {
-		require_once ( dirname( __FILE__ ) . '/includes/mstw-cs-utility-functions.php' );
-    }
-
+	require_once ( dirname( __FILE__ ) . '/includes/mstw-cs-utility-functions.php' );
 
 // ----------------------------------------------------------------
 // Add the CSS code to the header
@@ -177,24 +164,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 	 *		rules_array['suffix'] = end of rule - something like "px" or "rem"
 	 */
 	
-	function mstw_build_css_rule( $css_id, $rules_array, $options_array ) {
-
-		$return_css = $css_id . "{ \n";
-		
-		foreach ( $rules_array as $rule ) {
-			$option_name = $rule['option_name'];
-			if ( isset( $options_array[$option_name] ) and !empty( $options_array[$option_name] ) ) {
-				$return_css .= $rule['attrib'] . ":" . $options_array[$option_name] . $rule['suffix'] . ";\n";	
-			} 
-		}
-		
-		$return_css .= "} \n";
 	
-		return $return_css;
-	
-	}
-	
-	function mstw_cs_build_css_rule( $options_array, $option_name, $css_rule, $suffix ) {
+	function mstw_cs_build_css_rule( $options_array, $option_name, $css_rule, $suffix='' ) {
 		if ( isset( $options_array[$option_name] ) and !empty( $options_array[$option_name] ) ) {
 			return $css_rule . ":" . $options_array[$option_name] . "$suffix; \n";	
 		} 
@@ -219,10 +190,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 	function mstw_cs_get_posts( $query ) {
 		// Need to check the need for this first conditional ... someday
-		//if ( is_category( ) && $query->is_main_query() )
-		//	$query->set( 'post_type', array( 'post', 'coach' ) ); 
-  
-		if ( is_tax( 'staffs' ) && $query->is_main_query() ) {
+
+		if ( !is_admin() && is_tax( 'staffs' ) && $query->is_main_query() ) {
 			// We are on the coach gallery page ...
 			// So set the sort order based on the admin settings
 			//$options = get_option( 'mstw_cs_options' );
@@ -267,10 +236,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 				  );
 				  
 		$args = array( 
-			'hierarchical' 			=> false, 
-			'labels' 				=> $labels, 
+			'labels' 				=> $labels,
+			'public'				=> true,
 			'show_ui'				=> true,
+			'show_in_nav_menus'		=> true, //\\
+			'show_tagcloud'			=> false,
 			'show_admin_column'		=> true,
+			'hierarchical' 			=> false, 
 			'query_var' 			=> true, 
 			'rewrite' 				=> true 
 			);
@@ -282,6 +254,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 // ----------------------------------------------------------------
 // Deactivate, request upgrade, and exit if WP version is not right
+//
 	add_action( 'admin_init', 'mstw_cs_requires_wp_ver' );
 
 	function mstw_cs_requires_wp_ver() {
@@ -300,13 +273,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 // ----------------------------------------------------------------
 // Load the CSS
+//
 	add_action( 'wp_enqueue_scripts', 'mstw_cs_enqueue_styles' );
 
 	function mstw_cs_enqueue_styles () {
 		
 		// Find the full path to the css file 
-		$mstw_tr_style_url = plugins_url( '/css/mstw-cs-styles.css', __FILE__ );
-		//$mstw_tr_style_file = WP_PLUGIN_DIR . '/mstw-team-rosters/css/mstw-tr-style.css';
 		$mstw_cs_style_file = dirname( __FILE__ ) . '/css/mstw-cs-styles.css';
 		
 		wp_register_style( 'mstw-cs-styles', plugins_url( '/css/mstw-cs-styles.css', __FILE__ ) );
@@ -403,7 +375,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		// Set up the arguments for the staff_position post type. 
 		$staff_args = array(
 			'public'	=> true,
-			'query_var'	=> 'staff_position',
+			'query_var'	=> true, //'staff_position',
 			'rewrite' 	=> array(
 								'slug'       => 'staff_positions',
 								'with_front' => false,
@@ -450,16 +422,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 // --------------------------------------------------------------------------------------
 // Add the shortcode handler, which will create the a Coaching Staff table on the user side.
 // 	Handles the shortcode parameters, if there were any, 
-// 	then calls mstw_tr_build_roster() to create the output
+// 	then calls mstw_cs_build_staff_table() to create the output
 // --------------------------------------------------------------------------------------
 add_shortcode( 'mstw-cs-table', 'mstw_cs_shortcode_handler' );
 
-
 function mstw_cs_shortcode_handler( $atts ){
-
 	// get the options set in the admin screen
 	$options = get_option( 'mstw_cs_options' );
-	//$output = '<pre>OPTIONS:' . print_r( $options, true ) . '</pre>';
+	//mstw_log_msg( 'in mstw_cs_shortcode_handler ...' );
+	//mstw_log_msg( '$options:' );
+	//mstw_log_msg( $options );
 	
 	// and merge them with the defaults
 	$args = wp_parse_args( $options, mstw_cs_get_defaults( ) );
@@ -624,7 +596,7 @@ function mstw_cs_build_staff_table( $attribs ) {
 					else {
 						$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo.jpg';	
 					}
-					$row_string .=  '<img width="' . $table_photo_width . '" height="' . $table_photo_height . '" src="' . $photo_file_url . '" class="attachment-64x64 wp-post-image" alt="No photo available"/></td>';
+					$row_string .=  '<img width="' . $table_photo_width . '" height="' . $table_photo_height . '" src="' . $photo_file_url . '" class="attachment-64x64 wp-post-image" alt="' . __( 'No photo available.', 'mstw-loc-domain' ) . '"/></td>';
 				}
 			}
 			
@@ -649,7 +621,6 @@ function mstw_cs_build_staff_table( $attribs ) {
 			
 			// Add the coach's experience
 			if ( $show_experience ) {
-				//$row_string .= $row_td . get_post_meta( $post->ID, '_mstw_tr_height', true ) . '</td>';
 				$row_string .= $row_td . get_post_meta( $coach_id, 'mstw_cs_experience', true ) . '</td>';
 			}
 			

@@ -5,7 +5,7 @@
  */
 
 /*-----------------------------------------------------------------------------------
-Copyright 2012-13  Mark O'Donnell  (email : mark@shoalsummitsolutions.com)
+Copyright 2012-15  Mark O'Donnell  (email : mark@shoalsummitsolutions.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,14 +27,11 @@ Code from the File_CSV_DataSource class was re-used unchanged under
 that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel. 
 -----------------------------------------------------------------------------------*/
 
-/*-----------------------------------------------------------------------------------
- * CHANGE LOG:
- * 20130801-MAO: Started development of the initial version 0.1.
- *	
- * 
- *
- *  
------------------------------------------------------------------------------------*/
+//-----------------------------------------------------------------------------------
+//
+// See http://wordpress.org/plugins/coaching-staffs/developers/ for CHANGE LOG
+//
+//-----------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
 // Set-up Action and Filter Hooks for the Settings on the admin side
@@ -42,7 +39,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 //register_uninstall_hook(__FILE__, 'mstw_cs_delete_plugin_options');
 
 // --------------------------------------------------------------------------------------
-// Callback for: register_uninstall_hook(__FILE__, 'mstw_tr_delete_plugin_options')
+// Callback for: register_uninstall_hook(__FILE__, 'mstw_cs_delete_plugin_options')
 // --------------------------------------------------------------------------------------
 // It runs when the user deactivates AND DELETES the plugin. 
 // It deletes the plugin options DB entry, which is an array storing all the plugin options
@@ -51,6 +48,8 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 //	delete_option('mstw_cs_options');
 //
 // --------------------------------------------------------------------------------------
+
+	add_filter('months_dropdown_results', '__return_empty_array');
 
 	// ----------------------------------------------------------------
 	// Add styles and scripts for the color picker.
@@ -105,8 +104,47 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 	// ----------------------------------------------------------------
 	// Add a filter the All Staff Positions screen based on the Staffs Taxonomy
 	// This new code is from http://wordpress.stackexchange.com/questions/578/adding-a-taxonomy-filter-to-admin-list-for-a-custom-post-type
+	/*
 	add_action( 'restrict_manage_posts', 'mstw_cs_restrict_manage_posts' );
 	add_filter( 'parse_query','mstw_cs_convert_restrict' );
+	*/
+	add_action( 'restrict_manage_posts', 'mstw_cs_restrict_positions_by_staff' );
+	
+	function mstw_cs_restrict_positions_by_staff( ) {
+	global $typenow;
+
+	if( $typenow == 'staff_position' ) {
+		
+		$taxonomy_slugs = array( 'staffs' );
+		
+		foreach ( $taxonomy_slugs as $tax_slug ) {
+			//retrieve the taxonomy object for the tax_slug
+			$tax_obj = get_taxonomy( $tax_slug );
+			$tax_name = $tax_obj->labels->name;
+			
+			$terms = get_terms( $tax_slug );
+		
+			//output the html for the drop down menu
+			echo "<select name='$tax_slug' id='$tax_slug' class='postform'>";
+            echo "<option value=''>". __( 'Show All Staffs', 'mstw-loc-domain') . "</option>";
+			
+			//output each select option line
+            foreach ($terms as $term) {
+                //check against the last $_GET to show the current selection
+				if ( array_key_exists( $tax_slug, $_GET ) ) {
+					$selected = ( $_GET[$tax_slug] == $term->slug )? ' selected="selected"' : '';
+				}
+				else {
+					$selected = '';
+				}
+                echo '<option value=' . $term->slug . $selected . '>' . $term->name . ' (' . $term->count . ')</option>';
+            }
+            echo "</select>"; 
+		}	
+	}
+} //End: mstw_ss_restrict_games_by_scoreboard( )
+	
+	
 	
 	function mstw_cs_restrict_manage_posts( ) {
 		global $typenow;
@@ -468,7 +506,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 	function mstw_cs_register_menu_pages( ) {
 		add_menu_page( 	__( 'MSTW Coaching Staffs', 'mstw-loc-domain' ), // Page title
 						__( 'Coaching Staffs', 'mstw-loc-domain' ),	// Menu entry (+ icon)
-						'manage_options', 		// Capability required to access
+						'edit_posts', //'manage_options', 		// Capability required to access
 						'mstw-cs-main-menu', 	// Unique menu slug
 						'mstw_cs_menu_page', 	// Callback
 						plugins_url( 'coaching-staffs/images/mstw-admin-menu-icon.png' ), // Menu Icon
@@ -478,7 +516,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		add_submenu_page( 	'mstw-cs-main-menu', 							//parent slug
 							__( 'Coaching Staffs', 'mstw-loc-domain' ), 	//page title
 							__( 'Staffs', 'mstw-loc-domain' ),				//menu title
-							'manage_options', 								//user capability required to access
+							'edit_posts', //'manage_options', 								//user capability required to access
 							'edit-tags.php?taxonomy=staffs&post_type=staff_position', 						//unique menu slug
 							'' //callback to display page
 						);					
@@ -486,7 +524,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		add_submenu_page( 'mstw-cs-main-menu', 				//parent slug
 							__( 'Coaching Staffs Display Settings', 'mstw-loc-domain' ), 	//page title
 							__( 'Display Settings', 'mstw-loc-domain' ),		//menu title
-							'manage_options', 				//user capability required to access
+							'edit_posts', //'manage_options', 				//user capability required to access
 							'mstw-cs-display-settings', 		//unique menu slug
 							'mstw_cs_settings_page' 			//callback to display page
 						);					
@@ -709,7 +747,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array(	'id' => 'show_birth_date',
 						'name' => 'mstw_cs_options[show_birth_date]',
 						'value' => $options['show_birth_date'],
-						'label' => 'Any format you choose; it is just a string to me.'
+						'label' => ''
 						);
 						
 		add_settings_field(
@@ -853,9 +891,16 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		);
 		
 		// Show/Hide Staff Table Title
+		$foo = '';
+		if ( isset( $options['show_title'] ) )
+			$foo = $options['show_title'];
+			
+		//$foo = isset( $options['show_title'] ) ? $options['show_title'] : '';
+		$foo = mstw_cs_safe_ref( $options, 'show_title' );
+		
 		$args = array(	'id' => 'show_title',
 						'name' => 'mstw_cs_options[show_title]',
-						'value' => $options['show_title'],
+						'value' => $foo, //$options['show_title'], //mstw_cs_admin_safe_ref( $options, 'show_title' ),
 						'label' => __( 'Will use "Staff Name" from Staff taxonomy as default. Hide to use another page element for the table title.', 'mstw-loc-domain')
 						);
 						
@@ -867,11 +912,14 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 			$page_section, 					//Page section to display field
 			$args							//Callback arguments
 			);
-			
+		
+		//$foo = isset( $options['table_title_color'] ) ? $options['table_title_color'] : '';
+		$foo = mstw_cs_safe_ref( $options, 'table_title_color' );
+		
 		// Staff Table[shortcode] Title Color
 		$args = array( 	'id' => 'table_title_color',
 						'name' => 'mstw_cs_options[table_title_color]',
-						'value' => $options['table_title_color'],
+						'value' => mstw_cs_safe_ref( $options, 'table_title_color' ), //$options['table_title_color'], //mstw_cs_admin_safe_ref( $options, 'table_title_color' ),
 						'label' => ''
 					 );
 					 
@@ -887,7 +935,8 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Show/Hide Coaches' Photos
 		$args = array(	'id' => 'show_photos',
 						'name' => 'mstw_cs_options[show_photos]',
-						'value' => $options['show_photos'],
+						//'value' => $options['show_photos'], //mstw_cs_admin_safe_ref( $options, 'show_photos' ),
+						'value' => mstw_cs_safe_ref( $options, 'show_photos' ),
 						'label' => __( 'Will show coaches photos in the staff tables', 'mstw-loc-domain')
 						);
 						
@@ -904,7 +953,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Coaches' Photos Width
 		$args = array( 	'id' => 'table_photo_width',
 						'name'	=> 'mstw_cs_options[table_photo_width]',
-						'value'	=> $options['table_photo_width'],
+						'value'	=> mstw_cs_safe_ref( $options, 'table_photo_width' ), //$options['table_photo_width'], //mstw_cs_admin_safe_ref( $options, 'table_photo_width' ),
 						'label'	=> __( 'Set width in pixels for table photos, if shown. (Default: 80px)', 'mstw-loc-domain' )
 						);
 						
@@ -920,7 +969,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Coaches' Photos Height
 		$args = array( 	'id' => 'table_photo_height',
 						'name'	=> 'mstw_cs_options[table_photo_height]',
-						'value'	=> $options['table_photo_height'],
+						'value'	=> mstw_cs_safe_ref( $options, 'table_photo_height' ), //$options['table_photo_height'], //mstw_cs_admin_safe_ref( $options, 'table_photo_height' ),
 						'label'	=> __( 'Set height in pixels for table photos, if shown. (Default: 80px)', 'mstw-loc-domain' )
 						);
 						
@@ -953,7 +1002,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array( 	'id' => 'table_border_width',
 						'name' => 'mstw_cs_options[table_border_width]',
 						'value' => $options['table_border_width'],
-						'label' => __( 'in pixels', 'mstw-loc-domain' ),
+						'label' => __( 'Set table border width in pixels (default:2px)', 'mstw-loc-domain' ),
 					 );
 					 
 		add_settings_field(
@@ -1258,7 +1307,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array( 	'id' => 'profile_bio_border_width',
 						'name'	=> 'mstw_cs_options[profile_bio_border_width]',
 						'value'	=> $options['profile_bio_border_width'],
-						'label'	=> 'in pixels'
+						'label'	=> __( 'Set bio border width in pixels (default:2px)', 'mstw-loc-domain' )
 						);
 						
 		add_settings_field(
@@ -1389,7 +1438,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		$args = array( 	'id' => 'gallery_tile_border_width',
 						'name' => 'mstw_cs_options[gallery_tile_border_width]',
 						'value' => $options['gallery_tile_border_width'],
-						'label' => __( 'in pixels (Default: 2px)', 'mstw-loc-domain' ),
+						'label' => __( 'Set border width in pixels. (Default: 2px)', 'mstw-loc-domain' ),
 					 );
 					 
 		add_settings_field(
@@ -1422,7 +1471,7 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		// Create our array for storing the validated options
 		$output = array();
 		// Pull the previous (good) options
-		$options = get_option( 'mstw_tr_options' );
+		$options = get_option( 'mstw_cs_options' );
 		
 		if ( array_key_exists( 'reset', $input ) ) {
 			if ( $input['reset'] ) {
@@ -1470,8 +1519,8 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 							// there's an error. Reset to the last stored value
 							$output[$key] = $options[$key];
 							// add error message
-							add_settings_error( 'mstw_tr_' . $key,
-												'mstw_tr_hex_color_error',
+							add_settings_error( 'mstw_cs_' . $key,
+												'mstw_cs_hex_color_error',
 												'Invalid hex color entered!',
 												'error');
 						}
@@ -1486,20 +1535,16 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 					case 'gallery_photo_height':
 					case 'gallery_tile_border_width':
 					case 'gallery_tile_radius':
-						//$message = ($coolFactor >= 10) ? "You're one cool dude!" : "Sorry, you aren't that cool!";
-						$output[$key] = intval( $input[$key] );
+						$output[$key] = $input[$key] == '' ? '' : intval( $input[$key] );
 						break;
 						
 					// 0-1 stuff
 					case 'show_title':
 					case 'show_photos':
-						if ( $input[$key] == 1 ) {
-							$output[$key] = 1;
-						}
-						else {
-							$input[$key] = 0;
-						}
+						$output[$key] = ( isset( $input[$key] ) and  $input[$key] == 1 ) ? 1 : 0;
+						//mstw_log_msg( 'saving ' . $key . '... input= ' . $input[$key] . ' output= ' . $output[$key] );
 						break;
+						
 					// Sanitize all other settings as text
 					default:
 						$output[$key] = sanitize_text_field( $input[$key] );
@@ -1512,14 +1557,91 @@ that class's MIT license & copyright (2008) from Kazuyoshi Tlacaelel.
 		
 		return $output;
 	}
+	
+	function mstw_cs_safe_ref( $array, $ref ) {
+		$foo = isset( $array[$ref] ) ? $array[$ref] : '';
+		return $foo;
+	}
+
+	
+//----------------------------------------------------------------
+// Removing default messages and taking control of all admin messages for CPTs
+//
+	add_filter('post_updated_messages', 'mstw_cs_updated_messages');
+
+	function mstw_cs_updated_messages( $messages ) {
+		
+		$messages['coach'] = array( );
+		$messages['staff_position'] = array( );
+
+		$messages['coach'] = array(
+			0 => '', // Unused. Messages start at index 1.
+			1 => __( 'Coach updated.', 'mstw-loc-domain' ),
+			2 => __( 'Custom field updated.', 'mstw-loc-domain'),
+			3 => __( 'Custom field deleted.', 'mstw-loc-domain' ),
+			4 => __( 'Coach updated.', 'mstw-loc-domain' ),
+			5 => __( 'Coach restored to revision', 'mstw-loc-domain' ),
+			6 => __( 'Coach published.', 'mstw-loc-domain' ),
+			7 => __( 'Coach saved.', 'mstw-loc-domain' ),
+			8 => __( 'Coach submitted.', 'mstw-loc-domain' ),
+			9 => __( 'Coach scheduled for publication.', 'mstw-loc-domain' ),
+			10 => __( 'Coach draft updated.', 'mstw-loc-domain' ),
+		);
+		
+		$messages['staff_position'] = array(
+			0 => '', // Unused. Messages start at index 1.
+			1 => __( 'Position updated.', 'mstw-loc-domain' ),
+			2 => __( 'Custom field updated.', 'mstw-loc-domain'),
+			3 => __( 'Custom field deleted.', 'mstw-loc-domain' ),
+			4 => __( 'Position updated.', 'mstw-loc-domain' ),
+			5 => __( 'Position restored to revision', 'mstw-loc-domain' ),
+			6 => __( 'Position published.', 'mstw-loc-domain' ),
+			7 => __( 'Position saved.', 'mstw-loc-domain' ),
+			8 => __( 'Position submitted.', 'mstw-loc-domain' ),
+			9 => __( 'Position scheduled for publication.', 'mstw-loc-domain' ),
+			10 => __( 'Position draft updated.', 'mstw-loc-domain' ),
+		);
+		
+		return $messages;
+		
+	} //End: mstw_cs_updated_messages
+
+//----------------------------------------------------------------
+// Removing default messages and taking control of all admin messages for CPTs
+//
+	add_filter( 'bulk_post_updated_messages', 'mstw_cs_bulk_post_updated_messages', 10, 2 );
+
+	function mstw_cs_bulk_post_updated_messages( $messages, $bulk_counts ) {	
+		$messages['coach'] = array( );
+		$messages['staff_position'] = array( );
+		
+		$messages['coach'] = array(
+			'updated'   => _n( '%s coach updated.', '%s coaches updated.', $bulk_counts['updated'], 'mstw-loc-domain' ),
+			'locked'    => _n( '%s coach not updated, somebody is editing it.', '%s coaches not updated, somebody is editing them.', $bulk_counts['locked'], 'mstw-loc-domain' ),
+			'deleted'   => _n( '%s coach permanently deleted.', '%s coaches permanently deleted.', $bulk_counts['deleted'], 'mstw-loc-domain' ),
+			'trashed'   => _n( '%s coach moved to the Trash.', '%s coaches moved to the Trash.', $bulk_counts['trashed'], 'mstw-loc-domain' ),
+			'untrashed' => _n( '%s coach restored from the Trash.', '%s coaches restored from the Trash.', $bulk_counts['untrashed'], 'mstw-loc-domain' ),
+		);
+		
+		$messages['staff_position'] = array(
+			'updated'   => _n( '%s position updated.', '%s positions updated.', $bulk_counts['updated'], 'mstw-loc-domain' ),
+			'locked'    => _n( '%s position not updated, somebody is editing it.', '%s positions not updated, somebody is editing them.', $bulk_counts['locked'], 'mstw-loc-domain' ),
+			'deleted'   => _n( '%s position permanently deleted.', '%s positions permanently deleted.', $bulk_counts['deleted'], 'mstw-loc-domain' ),
+			'trashed'   => _n( '%s position moved to the Trash.', '%s positions moved to the Trash.', $bulk_counts['trashed'], 'mstw-loc-domain' ),
+			'untrashed' => _n( '%s position restored from the Trash.', '%s positions restored from the Trash.', $bulk_counts['untrashed'], 'mstw-loc-domain' ),
+		);
+				
+		return $messages;
+			
+	} //End: mstw_cs_bulk_post_updated_messages()
 
 	/*
 	//------------------------------------------------------------------
 	// Add admin_notices action - need to look at this more someday
 	
-	add_action( 'admin_notices', 'mstw_tr_admin_notices' );
+	add_action( 'admin_notices', 'mstw_cs_admin_notices' );
 	
-	function mstw_tr_admin_notices() {
+	function mstw_cs_admin_notices() {
 		settings_errors( );
 	}
 	*/

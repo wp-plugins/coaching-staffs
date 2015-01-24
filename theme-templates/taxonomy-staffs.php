@@ -1,14 +1,27 @@
 <?php
-/**
- * The template for displaying Coaching Staff Archive pages using the MSTW Coaching Staffs plugin.
- * This will create a 'gallery view' of the staff.
+ /**
+ * MSTW Taxonomy Staffs Template for displaying staff galleries.
  *
- * CHANGE LOG
- * 20130803-MAO:
- *	Began development
+ * 	NOTE: This is the "theme's framing". This template has been tested in the WordPress 
+ * 	Twenty Eleven Theme. Plugin users will probably have to modify this template 
+ * 	to fit their individual themes. 
  *
+ *	MSTW Wordpress Plugins (http://shoalsummitsolutions.com)
+ *	Copyright 2015 Mark O'Donnell (mark@shoalsummitsolutions.com)
  *
- */
+ *	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 3 of the License, or
+ *	(at your option) any later version.
+
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *	GNU General Public License for more details.
+ *
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program. If not, see <http://www.gnu.org/licenses/>..
+ *-------------------------------------------------------------------------*/
  
 	//if ( !function_exists( 'mstw_cs_set_fields_by_format' ) ) {
 		//echo '<p> mstw_text_ctrl does not exist. </p>';
@@ -41,7 +54,9 @@
 	$uri_array = explode( '/', $_SERVER['REQUEST_URI'] );	
 	$staff_slug = $uri_array[sizeof( $uri_array )-2];
 	$term = get_term_by( 'slug', $staff_slug, 'staffs' );
-	$staff_name .= $term->name;
+	$staff_name = '';
+	if( isset( $term->name ) )
+		$staff_name = $term->name;
 	
 	?>
 	
@@ -56,11 +71,12 @@
 
 	<?php /* Start the Loop */ 
 	// set the coach photo size based on admin settings, if any
-	$cs_image_width = ''; //$options['sp_image_width'];
-	$cs_image_height = ''; //$options['sp_image_height'];
 	
-	$img_width = ( $sp_image_width == '' ) ? 150 : $cs_image_width;
-	$img_height = ( $sp_image_height == '' ) ? 150 : $cs_image_height;
+	$cs_image_width = isset( $options['gallery_photo_width'] ) ? $options['gallery_photo_width'] : '';
+	$cs_image_height = isset( $options['gallery_photo_height'] ) ? $options['gallery_photo_height'] : '';
+	
+	$img_width = ( $cs_image_width == '' ) ? 150 : $cs_image_width;
+	$img_height = ( $cs_image_height == '' ) ? 150 : $cs_image_height;
 	
 	while ( have_posts() ) : the_post(); 
 		$coach_id = get_post_meta( $post->ID, 'mstw_cs_position_coach', true );
@@ -85,7 +101,7 @@
 				 if ( has_post_thumbnail( $coach_id ) ) { 
 					//Get the photo file;
 					$photo_file_url = wp_get_attachment_thumb_url( get_post_thumbnail_id( $coach_id ) );
-					$alt = 'Photo of ' . $name;
+					$alt = __( 'Photo of', 'mstw-loc-domain' ) . ' ' . $name;
 				} else {
 					// Default image is tied to the staff taxonomy. 
 					// Try to load default-photo-staff-slug.jpg, If it does not exst,
@@ -93,10 +109,11 @@
 					$photo_file = WP_PLUGIN_DIR . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
 					if ( file_exists( $photo_file ) ) {
 						$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '-' . $staff_slug . '.jpg';
+						$alt = __( 'Default image for', 'mstw-loc-domain' ) . ' ' . $staff_slug;
 					}
 					else {
 						$photo_file_url = plugins_url() . '/coaching-staffs/images/default-photo' . '.jpg';
-						$alt = "Photo not found.";
+						$alt = __( 'Photo not found.', 'mstw-loc-domain' );
 					}
 				}
 				// See if the single-coach.php template is in the theme directory

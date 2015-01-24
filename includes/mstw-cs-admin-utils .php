@@ -4,7 +4,7 @@
  * 	Utility functions for Coaching Staffs Plugin Admin
  *
  *	Coaching Staffs (Wordpress Plugin)
- *	Copyright (C) 2013 Mark O'Donnell
+ *	Copyright (C) 2013-15 Mark O'Donnell
  *	Contact me at http://shoalsummitsolutions.com
  *
  *	This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,24 @@
  */
  
  /*----------------------------------------------------------------	
- *	MSTW_CS_ADMIN_UTILS_LOADED - DO NOT REMOVE THIS FUNCTION!
+ *	1. MSTW_CS_ADMIN_UTILS_LOADED - DO NOT REMOVE THIS FUNCTION!
  *		This function is used by the require_once statement to figure
  *		out whether or not to load the utils.
  *---------------------------------------------------------------*/
 	function mstw_cs_admin_utils_loaded( ) {
 		return( true );
 	}
+	
+//----------------------------------------------------------------
+// 2. MSTW_CS_ADMIN_SAFE_REF	
+// 		Stops annoying php notices from undefined associative array references
+//----------------------------------------------------------------	
+	
+	//function mstw_cs_admin_safe_ref( $array, $index ) {
+		//$retval = ( isset( $array['foo'] ) ? $array['foo'] : "" );
+		//return $retval;
+	//}
+	
  /*----------------------------------------------------------------	
  *	MSTW_CS_COLOR_CTRL
  *	Builds color selector controls for the admin UI

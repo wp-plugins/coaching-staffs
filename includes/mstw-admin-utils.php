@@ -64,6 +64,7 @@
 		$label = $args['label'];
 		
 		echo "<input type='text' id='$id' name='$name' value='$value' /> \n";
+		echo ($label != '') ? "<br /><span class='description'>$label</span>" : "";
 		//echo "<label for='$id'>$label</label> \n";
 
 	} //End: mstw_utl_color_ctrl
@@ -87,7 +88,8 @@
 		$label = $args['label'];
 		
 		echo "<input type='text' id='$id' name='$name' value='$value' /> \n";
-		echo "<label for='$id'>$label</label> \n";
+		//echo "<label for='$id'>$label</label> \n";
+		echo ($label != '') ? "<br /><span class='description'>$label</span>" : "";
 		
 	} //End: mstw_utl_text_ctrl
 	
@@ -113,7 +115,8 @@
 		
 		echo "<input type='checkbox' id='$id' name='$name' value='1' " . 
 				checked( '1', $value, false ) . "/> \n";  
-		echo "<label for='$id'>$label</label> \n";
+		//echo "<label for='$id'>$label</label> \n";
+		echo ($label != '') ? "<br /><span class='description'>$label</span>" : "";
 		
 	}	//End: mstw_utl_checkbox_ctrl
 	
@@ -173,7 +176,8 @@
 		}
 		echo "</select> \n";
 		//echo "<label for='$id'>". $label . "</label> \n";
-		echo "<label for='$id'>$label</label> \n";
+		//echo "<label for='$id'>$label</label> \n";
+		echo ($label != '') ? "<br /><span class='description'>$label</span>" : "";
 		
 	}  //End: mstw_utl_select_option_ctrl
 

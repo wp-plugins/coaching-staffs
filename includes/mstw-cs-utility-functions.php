@@ -1,13 +1,41 @@
 <?php
 /*----------------------------------------------------------
  *	MSTW-CS-UTILITY-FUNCTIONS.PHP
- *	mstr_cs_get_defaults( ) - returns the default option settings
+ *	1. mstr_cs_get_defaults( ) - returns the default option settings
+ *  2. mstw_log_msg( ) - logs messages to /wp-content/debug.log (if wp-config permits)
  *	
  *---------------------------------------------------------*/
+ 
+//------------------------------------------------------------------------------
+//	1. mstw_log_msg - logs messages to /wp-content/debug IF WP_DEBUG is true
+//		ARGUMENTS:
+//			$msg - string, array, or object to log
+//					note: if $msg == 'divider' a divider is output to the log
+//		RETURNS:
+//			None. Outputs to WP error_log
+//
+if ( !function_exists( 'mstw_log_msg' ) ) {
+	function mstw_log_msg( $msg ) {
+		if ( WP_DEBUG === true ) {
+			if ( $msg == 'divider' ) {
+				error_log( '------------------------------------------------------' );
+			}
+			else if( is_array( $msg ) || is_object( $msg ) ) {
+				error_log( print_r( $msg, true ) );
+			} 
+			else {
+				error_log( $msg );
+			}
+		}
+	} //End: mstw_log_msg( )
+}
 
-/*---------------------------------------------------------------------------------
- *	mstw_cs_get_defaults: returns the array of option defaults
- *-------------------------------------------------------------------------------*/	
+//---------------------------------------------------------------------------------
+//	2. mstw_cs_get_defaults: returns the array of option defaults
+//		ARGUMENTS: None
+//		RETURNS: default options/settings array
+//	
+if ( !function_exists( 'mstw_cs_get_defaults' ) ) {
 	function mstw_cs_get_defaults( ) {
 		//Base defaults
 		$defaults = array(	
@@ -45,5 +73,7 @@
 				);
 				
 		return $defaults;
-	}
-	?>
+	} //End: mstw_cs_get_defaults()
+}
+
+?>
